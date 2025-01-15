@@ -1,15 +1,6 @@
 'use client';
-import TopBar from '@/components/TopBar/TopBar';
-import SideBar from '@/components/SideBar/SideBar';
-import ContextArea from '@/components/ContextArea/ContextArea';
-
+import UnloggedLayout from '@/components/layout/UnloggedLayout';
 
 export default function About() {
-	return (
-		<>
-			<TopBar />
-			<SideBar />
-			<ContextArea>ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT</ContextArea>
-		</>
-	);
+	return <UnloggedLayout>ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT</UnloggedLayout>;
 }

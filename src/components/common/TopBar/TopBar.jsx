@@ -1,10 +1,7 @@
 'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import TopBarItem from '@/components/TopBarItem/TopBarItem';
-import { useSidebar } from '@/context/SidebarContext';
+import TopBarItem from '@/components/common/TopBarItem/TopBarItem';
+import { getSidebarContext } from '@/context/SidebarContext';
 import { useTheme } from '@/context/ThemeProvider';
-//icons
 import shrinkSidebarIcon from '@/assets/shrink-sidebar.svg';
 import expandSidebarIcon from '@/assets/expand-sidebar.svg';
 import userIcon from '@/assets/user-circle.svg';
@@ -15,15 +12,14 @@ import moonIcon from '@/assets/moon.svg';
 import sunIcon from '@/assets/sun.svg';
 
 export default function TopBar() {
-	const { isSidebarOpen, toggleSidebar } = useSidebar();
+	const { isSidebarOpen, toggleSidebar } = getSidebarContext();
 	const { isDarkMode, toggleTheme } = useTheme();
 	const notification = true;
+	const containerClassName = isSidebarOpen ? 'pl-64' : 'pl-16';
 
 	return (
 		<div
-			className={`flex flex-row w-full h-16 items-center bg-menuPrimary transition-all duration-300 ease-in-out  ${
-				isSidebarOpen ? 'pl-64' : 'pl-16'
-			}`}
+			className={`flex flex-row w-full h-16 items-center bg-menuPrimary transition-all duration-300 ease-in-out  ${containerClassName}`}
 		>
 			<TopBarItem
 				onClick={toggleSidebar}

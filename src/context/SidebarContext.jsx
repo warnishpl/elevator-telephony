@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 
 const SidebarContext = createContext();
 
-export const useSidebar = () => {
+export const getSidebarContext = () => {
 	return useContext(SidebarContext);
 };
 

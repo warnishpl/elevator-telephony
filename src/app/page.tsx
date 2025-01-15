@@ -1,14 +1,10 @@
 'use client';
-import TopBar from '@/components/TopBar/TopBar';
-import SideBar from '@/components/SideBar/SideBar';
-import ContextArea from '@/components/ContextArea/ContextArea';
+import UnloggedLayout from '@/components/layout/UnloggedLayout';
 
 export default function Home() {
 	return (
-		<>
-			<TopBar />
-			<SideBar />
-			<ContextArea>HOME HOME HOME HOME HOME HOME HOME HOME HOME</ContextArea>
-		</>
+		<UnloggedLayout>
+			HOME HOME HOME HOME HOME HOME HOME HOME HOME
+		</UnloggedLayout>
 	);
 }
