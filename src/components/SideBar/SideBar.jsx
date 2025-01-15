@@ -13,7 +13,7 @@ export default function Sidebar() {
 
 	return (
 		<div
-			className={`fixed top-0 left-0 h-screen bg-menuPrimary text-white transition-all duration-300 ease-in-out transform ${
+			className={`fixed top-0 left-0 h-screen bg-menuPrimary text-text transition-all duration-300 ease-in-out transform ${
 				isSidebarOpen ? 'w-64' : 'w-16'
 			}`}
 		>

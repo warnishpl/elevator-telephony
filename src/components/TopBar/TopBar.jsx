@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TopBarItem from '@/components/TopBarItem/TopBarItem';
 import { useSidebar } from '@/context/SidebarContext';
+import { useTheme } from '@/context/ThemeProvider';
 //icons
 import shrinkSidebarIcon from '@/assets/shrink-sidebar.svg';
 import expandSidebarIcon from '@/assets/expand-sidebar.svg';
@@ -15,6 +16,7 @@ import sunIcon from '@/assets/sun.svg';
 
 export default function TopBar() {
 	const { isSidebarOpen, toggleSidebar } = useSidebar();
+	const { isDarkMode, toggleTheme } = useTheme();
 	const notification = true;
 
 	return (
@@ -32,7 +34,7 @@ export default function TopBar() {
 				<input
 					type='text'
 					placeholder='Wyszukaj'
-					className="h-9 w-96 pl-7 ml-2 pr-2 rounded-md border-2 border-transparent bg-inputBackground text-black bg-no-repeat bg-[url('@/assets/search.svg')] bg-[3px_50%] transition-all duration-300 ease-in-out focus:outline-none focus:border-menuSecondary"
+					className="h-9 w-96 pl-7 ml-2 pr-2 rounded-md border-2 border-transparent bg-inputBackground text-text bg-no-repeat bg-[url('@/assets/search.svg')] bg-[3px_50%] transition-all duration-300 ease-in-out focus:outline-none focus:border-menuSecondary"
 				/>
 			</div>
 			<div className='ml-auto flex items-centeroutline-none'>
@@ -40,7 +42,11 @@ export default function TopBar() {
 					href='/'
 					iconPath={notification ? newMessageIcon : messageIcon}
 				></TopBarItem>
-				<TopBarItem href='/' iconPath={notification ? moonIcon : sunIcon}></TopBarItem>
+				<TopBarItem
+					href='/'
+					iconPath={isDarkMode ? moonIcon : sunIcon}
+					onClick={toggleTheme}
+				></TopBarItem>
 				<TopBarItem href='/' iconPath={settingsIcon}></TopBarItem>
 				<TopBarItem href='/' iconPath={userIcon}>
 					Michał

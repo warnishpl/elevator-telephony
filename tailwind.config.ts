@@ -10,11 +10,11 @@ export default {
 		extend: {
 			colors: {
 				background: 'var(--background)',
-				foreground: 'var(--foreground)',
-				menuPrimary: '#374151',
-				menuSecondary: '#4ade80',
-				menuTertiary: '#329d5b',
-				inputBackground: '#4b5563',
+				menuPrimary: 'var(--menuPrimary)',
+				menuSecondary: 'var(--menuSecondary)',
+				menuTertiary: 'var(--menuTertiary)',
+				inputBackground: 'var(--inputBackground)',
+				text: 'var(--text)',
 			},
 		},
 	},
