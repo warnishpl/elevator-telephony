@@ -27,7 +27,6 @@ export default function TopBar() {
 		>
 			<TopBarItem
 				onClick={toggleSidebar}
-				href='/'
 				iconPath={isSidebarOpen ? shrinkSidebarIcon : expandSidebarIcon}
 			/>
 			<div>
@@ -37,20 +36,16 @@ export default function TopBar() {
 					className="h-9 w-96 pl-7 ml-2 pr-2 rounded-md border-2 border-transparent bg-inputBackground text-text bg-no-repeat bg-[url('@/assets/search.svg')] bg-[3px_50%] transition-all duration-300 ease-in-out focus:outline-none focus:border-menuSecondary"
 				/>
 			</div>
-			<div className='ml-auto flex items-centeroutline-none'>
+			<div className='ml-auto flex items-center outline-none'>
 				<TopBarItem
-					href='/'
 					iconPath={notification ? newMessageIcon : messageIcon}
 				></TopBarItem>
 				<TopBarItem
-					href='/'
 					iconPath={isDarkMode ? moonIcon : sunIcon}
 					onClick={toggleTheme}
 				></TopBarItem>
-				<TopBarItem href='/' iconPath={settingsIcon}></TopBarItem>
-				<TopBarItem href='/' iconPath={userIcon}>
-					Michał
-				</TopBarItem>
+				<TopBarItem iconPath={settingsIcon}></TopBarItem>
+				<TopBarItem iconPath={userIcon}>Michał</TopBarItem>
 			</div>
 		</div>
 	);
