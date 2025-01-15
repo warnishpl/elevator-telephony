@@ -2,13 +2,14 @@
 import { SidebarProvider } from '@/context/SidebarContext';
 import TopBar from '@/components/TopBar/TopBar';
 import SideBar from '@/components/SideBar/SideBar';
+import ContextArea from '@/components/ContextArea/ContextArea';
 
 export default function About() {
 	return (
 		<SidebarProvider>
 			<TopBar />
 			<SideBar />
-			<div>ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT</div>
+			<ContextArea>ABOUT ABOUT ABOUT ABOUT ABOUT ABOUT</ContextArea>
 		</SidebarProvider>
 	);
 }

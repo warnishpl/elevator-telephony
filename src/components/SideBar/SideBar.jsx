@@ -6,8 +6,10 @@ import homeIcon from '@/assets/home.svg';
 import aboutIcon from '@/assets/about.svg';
 import elevatorIcon from '@/assets/elevators.svg';
 
+
 export default function Sidebar() {
 	const { isSidebarOpen } = useSidebar();
+	
 
 	return (
 		<div
