@@ -1,22 +1,20 @@
 'use client';
-import TopBarItem from '@/components/common/TopBarItem/TopBarItem';
-import { getSidebarContext } from '@/context/SidebarContext';
-import { useTheme } from '@/context/ThemeProvider';
+import TopBarItem from '@/components/TopBarItem/TopBarItem';
 import shrinkSidebarIcon from '@/assets/shrink-sidebar.svg';
 import expandSidebarIcon from '@/assets/expand-sidebar.svg';
 import userIcon from '@/assets/user-circle.svg';
 import settingsIcon from '@/assets/settings.svg';
-import messageIcon from '@/assets/message.svg';
 import newMessageIcon from '@/assets/message-exclamation.svg';
 import moonIcon from '@/assets/moon.svg';
 import sunIcon from '@/assets/sun.svg';
 
-export default function TopBar() {
-	const { isSidebarOpen, toggleSidebar } = getSidebarContext();
-	const { isDarkMode, toggleTheme } = useTheme();
-	const notification = true;
+export default function TopBar({
+	isSidebarOpen,
+	toggleSidebar,
+	isDarkMode,
+	toggleTheme,
+}) {
 	const containerClassName = isSidebarOpen ? 'pl-64' : 'pl-16';
-
 	return (
 		<div
 			className={`flex flex-row w-full h-16 items-center bg-menuPrimary transition-all duration-300 ease-in-out  ${containerClassName}`}
@@ -34,7 +32,7 @@ export default function TopBar() {
 			</div>
 			<div className='ml-auto flex items-center outline-none'>
 				<TopBarItem
-					iconPath={notification ? newMessageIcon : messageIcon}
+					iconPath={newMessageIcon}
 				></TopBarItem>
 				<TopBarItem
 					iconPath={isDarkMode ? moonIcon : sunIcon}

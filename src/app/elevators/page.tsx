@@ -1,10 +1,12 @@
 'use client';
-import UnloggedLayout from '@/components/layout/UnloggedLayout';
+
+import LoggedLayout from "@/components/layout/LoggedLayout";
+
 
 export default function Elevators() {
 	return (
-		<UnloggedLayout>
+		<LoggedLayout>
 			ELEVATORS ELEVATORS ELEVATORS ELEVATORS ELEVATORS ELEVATORS
-		</UnloggedLayout>
+		</LoggedLayout>
 	);
 }

@@ -1,10 +1,8 @@
 'use client';
-import UnloggedLayout from '@/components/layout/UnloggedLayout';
+import LoggedLayout from '@/components/layout/LoggedLayout';
 
 export default function Home() {
 	return (
-		<UnloggedLayout>
-			HOME HOME HOME HOME HOME HOME HOME HOME HOME
-		</UnloggedLayout>
+		<LoggedLayout>HOME HOME HOME HOME HOME HOME HOME HOME HOME</LoggedLayout>
 	);
 }

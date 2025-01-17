@@ -1,18 +1,27 @@
-import React from 'react';
-import ContextArea from '../common/ContextArea/ContextArea';
-import Sidebar from '../common/SideBar/SideBar';
-import TopBar from '../common/TopBar/TopBar';
+import React, { useState } from 'react';
+import ContextArea from '@/components/ContextArea/ContextArea';
+import SidebarContainer from '@/components/Sidebar/SidebarContainer';
+import TopBarContainer from '@/components/TopBar/TopBarContainer';
 
 interface UnloggedLayoutProps {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }
 
-export default function UnloggedLayout({ children }: UnloggedLayoutProps) {
-  return (
-    <>
-      <TopBar />
-      <Sidebar />
-      <ContextArea>{children}</ContextArea>
-    </>
-  );
+export default function LoggedLayout({ children }: UnloggedLayoutProps) {
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+	const toggleSidebar = () => {
+		setIsSidebarOpen((prevState) => !prevState);
+	};
+
+	return (
+		<>
+			<TopBarContainer
+				isSidebarOpen={isSidebarOpen}
+				toggleSidebar={toggleSidebar}
+			/>
+			<SidebarContainer isSidebarOpen={isSidebarOpen} />
+			<ContextArea isSidebarOpen={isSidebarOpen}>{children}</ContextArea>
+		</>
+	);
 }

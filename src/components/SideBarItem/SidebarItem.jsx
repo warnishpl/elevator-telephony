@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function SideBarItem({
+export default function SidebarItem({
 	isOpen,
 	children,
 	iconPath,
