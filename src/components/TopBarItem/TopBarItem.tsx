@@ -1,7 +1,17 @@
 'use client';
 import Image from 'next/image';
+import React from 'react';
 
-export default function TopBarItem({ children, iconPath, onClick }) {
+interface TopBarItemProps {
+	children?: React.ReactNode;
+	iconPath: string;
+	onClick?: () => void;
+}
+export default function TopBarItem({
+	children,
+	iconPath,
+	onClick,
+}: TopBarItemProps) {
 	return (
 		<button onClick={onClick} className='mr-2'>
 			<div className='flex justify-center items-center rounded p-1 hover:bg-menuSecondary transition-all duration-300 ease-in-out'>

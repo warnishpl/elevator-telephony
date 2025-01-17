@@ -1,6 +1,15 @@
 'use client';
 
-export default function ContextArea({ children, isSidebarOpen }) {
+import React from 'react';
+
+interface ContextAreaProps {
+	children: React.ReactNode;
+	isSidebarOpen: boolean;
+}
+export default function ContextArea({
+	children,
+	isSidebarOpen,
+}: ContextAreaProps) {
 	const containerClassName = isSidebarOpen ? 'ml-64' : 'ml-16';
 
 	return (

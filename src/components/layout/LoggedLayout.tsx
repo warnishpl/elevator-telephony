@@ -3,11 +3,11 @@ import ContextArea from '@/components/ContextArea/ContextArea';
 import SidebarContainer from '@/components/Sidebar/SidebarContainer';
 import TopBarContainer from '@/components/TopBar/TopBarContainer';
 
-interface UnloggedLayoutProps {
+interface LoggedLayoutProps {
 	children: React.ReactNode;
 }
 
-export default function LoggedLayout({ children }: UnloggedLayoutProps) {
+export default function LoggedLayout({ children }: LoggedLayoutProps) {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 	const toggleSidebar = () => {

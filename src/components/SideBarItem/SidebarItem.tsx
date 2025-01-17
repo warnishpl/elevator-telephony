@@ -2,13 +2,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+interface SidebarItemProps {
+	isOpen: boolean;
+	children: string;
+	iconPath: string;
+	href: string;
+	isActive: string;
+}
 export default function SidebarItem({
 	isOpen,
 	children,
 	iconPath,
 	href,
 	isActive,
-}) {
+}: SidebarItemProps) {
 	const containerClassName = isActive
 		? 'bg-menuSecondary hover:bg-menuTertiary'
 		: '';

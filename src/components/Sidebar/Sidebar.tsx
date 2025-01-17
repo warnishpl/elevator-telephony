@@ -4,7 +4,11 @@ import homeIcon from '@/assets/home.svg';
 import aboutIcon from '@/assets/about.svg';
 import elevatorIcon from '@/assets/elevators.svg';
 
-export default function Sidebar({ pathname, isSidebarOpen }) {
+interface SidebarProps {
+	pathname: string;
+	isSidebarOpen: boolean;
+}
+export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
 	const containerClassName = isSidebarOpen ? 'w-64' : 'w-16';
 	return (
 		<div

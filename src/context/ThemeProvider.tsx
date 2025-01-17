@@ -1,13 +1,21 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-const ThemeContext = createContext();
+interface ThemeContextType {
+	isDarkMode: boolean | null;
+	toggleTheme: () => void;
+}
+const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const useTheme = () => useContext(ThemeContext);
 
-export const ThemeProvider = ({ children }) => {
-	const [isDarkMode, setIsDarkMode] = useState(null);
+interface ThemeProviderProps {
+	children: React.ReactNode;
+}
+
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+	const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
 
 	useEffect(() => {
 		const storedTheme = localStorage.getItem('theme');
