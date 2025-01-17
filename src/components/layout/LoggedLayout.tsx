@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import ContextArea from '@/components/ContextArea/ContextArea';
 import SidebarContainer from '@/components/Sidebar/SidebarContainer';

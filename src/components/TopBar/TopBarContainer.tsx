@@ -1,3 +1,4 @@
+'use client';
 import { useTheme } from '@/context/ThemeProvider';
 import TopBar from './TopBar';
 
