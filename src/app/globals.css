@@ -8,20 +8,22 @@
 :root {
 	--background: #f3f4f6;
 	--menuPrimary: #e5e7eb;
-	--menuSecondary: #4ade80;
-	--menuTertiary: #329d5b;
+	--menuSecondary: #1976d2;
+	--menuTertiary: #1565C0;
 	--inputBackground: #d1d5db;
 	--text: #1f2937;
 }
 .dark {
 	--background: #a3a3a3;
 	--menuPrimary: #374151;
-	--menuSecondary: #4ade80;
-	--menuTertiary: #329d5b;
+	--menuSecondary: #1976d2;
+	--menuTertiary: #1565C0;
 	--inputBackground: #4b5563;
 	--text: #000000;
 }
-
+h1 {
+	font-size: x-large;
+}
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	background: var(--background);

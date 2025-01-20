@@ -1,12 +1,12 @@
 'use client';
 import TopBarItem from '@/components/TopBarItem/TopBarItem';
-import shrinkSidebarIcon from '@/assets/shrink-sidebar.svg';
-import expandSidebarIcon from '@/assets/expand-sidebar.svg';
-import userIcon from '@/assets/user-circle.svg';
-import settingsIcon from '@/assets/settings.svg';
-import newMessageIcon from '@/assets/message-exclamation.svg';
-import moonIcon from '@/assets/moon.svg';
-import sunIcon from '@/assets/sun.svg';
+import shrinkSidebarIcon from '@assets/shrink-sidebar.svg';
+import expandSidebarIcon from '@assets/expand-sidebar.svg';
+import userIcon from '@assets/user-circle.svg';
+import settingsIcon from '@assets/settings.svg';
+import newMessageIcon from '@assets/message-exclamation.svg';
+import moonIcon from '@assets/moon.svg';
+import sunIcon from '@assets/sun.svg';
 
 interface TopBarProps {
 	isSidebarOpen: boolean;
@@ -37,7 +37,7 @@ export default function TopBar({
 				<input
 					type='text'
 					placeholder='Wyszukaj'
-					className="h-9 w-96 pl-7 ml-2 pr-2 rounded-md border-2 border-transparent bg-inputBackground text-text bg-no-repeat bg-[url('@/assets/search.svg')] bg-[3px_50%] transition-all duration-300 ease-in-out focus:outline-none focus:border-menuSecondary"
+					className={`h-9 w-96 pl-7 ml-2 pr-2 rounded-md border-2 border-transparent bg-inputBackground text-text bg-no-repeat bg-[3px_50%] transition-all duration-300 ease-in-out focus:outline-none focus:border-menuSecondary`}
 				/>
 			</div>
 			<div className='ml-auto flex items-center'>

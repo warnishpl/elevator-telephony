@@ -26,9 +26,10 @@ export function useRequestApi() {
 			method,
 			url: path,
 			data,
-			baseURL: 'https://api.sampleapis.com/beers',
+			baseURL: 'http://eletele.tplinkdns.com/api',
 			params: params,
 			timeout: 5000,
+			withCredentials: true,
 		};
 
 		return axios(config)
@@ -36,10 +37,9 @@ export function useRequestApi() {
 				showSuccessAlert = true;
 				showErrorAlert = false;
 				if (showSuccessAlert) {
-					showAlert('Operacja zakończona sukcesem', 'success');
+					showAlert('API SUCCESS', 'success');
 				}
-
-				return response.data;
+				return response;
 			})
 			.catch((error) => {
 				if (axios.isAxiosError(error)) {
