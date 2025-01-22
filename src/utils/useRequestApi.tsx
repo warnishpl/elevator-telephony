@@ -6,6 +6,7 @@ interface RequestApiProps {
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE';
 	data?: object;
 	params?: object;
+	headers?: object;
 	onError?: () => void;
 	showErrorAlert?: boolean;
 	showSuccessAlert?: boolean;
@@ -19,6 +20,7 @@ export function useRequestApi() {
 		data,
 		params,
 		onError,
+		headers,
 		showSuccessAlert = false,
 		showErrorAlert = true,
 	}: RequestApiProps): Promise<T> {
@@ -30,6 +32,7 @@ export function useRequestApi() {
 			params: params,
 			timeout: 5000,
 			withCredentials: true,
+			headers,
 		};
 
 		return axios(config)

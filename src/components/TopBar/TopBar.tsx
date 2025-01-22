@@ -1,12 +1,12 @@
 'use client';
 import TopBarItem from '@/components/TopBarItem/TopBarItem';
-import shrinkSidebarIcon from '@assets/shrink-sidebar.svg';
-import expandSidebarIcon from '@assets/expand-sidebar.svg';
-import userIcon from '@assets/user-circle.svg';
-import settingsIcon from '@assets/settings.svg';
-import newMessageIcon from '@assets/message-exclamation.svg';
-import moonIcon from '@assets/moon.svg';
-import sunIcon from '@assets/sun.svg';
+import shrinkSidebarIcon from './../../../public/shrink-sidebar.svg';
+import expandSidebarIcon from './../../../public/expand-sidebar.svg';
+import userIcon from './../../../public/user-circle.svg';
+import settingsIcon from './../../../public/settings.svg';
+import newMessageIcon from './../../../public/message-exclamation.svg';
+import moonIcon from './../../../public/moon.svg';
+import sunIcon from './../../../public/sun.svg';
 
 interface TopBarProps {
 	isSidebarOpen: boolean;
@@ -22,6 +22,7 @@ export default function TopBar({
 	toggleTheme,
 }: TopBarProps) {
 	const containerClassName = isSidebarOpen ? 'pl-64' : 'pl-16';
+
 	return (
 		<div
 			className={`flex flex-row w-full h-16 items-center bg-menuPrimary transition-all duration-300 ease-in-out  ${containerClassName}`}

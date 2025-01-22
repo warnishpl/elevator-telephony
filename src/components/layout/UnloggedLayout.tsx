@@ -12,10 +12,14 @@ import { useTheme } from '@/context/ThemeProvider';
 import sitemarkIcon from './../../../public/sitemark.svg';
 import moonIcon from './../../../public/moon.svg';
 import sunIcon from './../../../public/sun.svg';
+import {  usePathname } from 'next/navigation';
 
 type Option = 'email' | 'phone' | null;
+interface LoggedLayoutProps {
+	children: React.ReactNode;
+}
 
-export default function UnloggedLayout() {
+export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 	const { requestApi } = useRequestApi();
 	const [verificationCode, setVerificationCode] = useState<string>('');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -24,6 +28,7 @@ export default function UnloggedLayout() {
 	const [inputError, setInputError] = useState<boolean>(false);
 	const [inputErrorMessage, setInputErrorMessage] = useState<string>('');
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+	const pathName = usePathname();
 
 	const context = useTheme();
 	let isDarkMode = false;
@@ -52,7 +57,7 @@ export default function UnloggedLayout() {
 				setInputErrorMessage('Nieprawidłowy numer telefonu');
 				return;
 			}
-			await fetchUserDataByPhone(phoneNumber);
+			await fetchUserData(phoneNumber, 'PHONE');
 			setIsSubmitted(true);
 		} else if (activeOption === 'email') {
 			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,32 +66,36 @@ export default function UnloggedLayout() {
 				setInputErrorMessage('Nieprawidłowy adres email');
 				return;
 			}
-			await fetchUserDataByEmail(email);
+			await fetchUserData(email, 'EMAIL');
 			setIsSubmitted(true);
 		}
 	}
 
-	async function fetchUserDataByPhone(phone: string) {
+	async function fetchUserData(
+		login: string,
+		provider: 'PHONE' | 'EMAIL',
+		verificationCode?: string
+	) {
 		try {
-			await requestApi({
+			const phoneData = !verificationCode
+				? { provider: 'PHONE', phoneNumber: login }
+				: { provider: 'PHONE', phoneNumber: login, code: verificationCode };
+			const data =
+				provider === 'EMAIL' ? { provider: 'EMAIL', email: login } : phoneData;
+			const response = await requestApi({
 				path: '/auth/login',
 				method: 'POST',
-				data: { provider: 'PHONE', phoneNumber: phone },
+				data,
 			});
+			console.log(response);
+			console.log('fetchUserData success');
 		} catch (error) {
-			console.error('Błąd podczas logowania telefonem:', error);
-		}
-	}
-
-	async function fetchUserDataByEmail(email: string) {
-		try {
-			await requestApi({
-				path: '/auth/login',
-				method: 'POST',
-				data: { provider: 'EMAIL', email },
-			});
-		} catch (error) {
-			console.error('Błąd podczas logowania emailem:', error);
+			console.error(
+				`Błąd podczas logowania za pomocą ${
+					provider === 'PHONE' ? 'telefonu' : 'emaila'
+				}:`,
+				error
+			);
 		}
 	}
 
@@ -96,20 +105,7 @@ export default function UnloggedLayout() {
 			setInputErrorMessage('Proszę wprowadzić kod weryfikacyjny');
 			return;
 		}
-
-		try {
-			await requestApi({
-				path: '/auth/login',
-				method: 'POST',
-				data: {
-					provider: 'PHONE',
-					phoneNumber: phoneNumber,
-					code: verificationCode,
-				},
-			});
-		} catch (error) {
-			console.log(error);
-		}
+		fetchUserData(phoneNumber, 'PHONE', verificationCode);
 	}
 
 	return (
@@ -133,7 +129,6 @@ export default function UnloggedLayout() {
 					</button>
 				</div>
 				<h1>Zaloguj się</h1>
-
 				<div className='flex flex-col sm:flex-row justify-between gap-4 mt-4'>
 					<Button
 						variant={activeOption === 'email' ? 'contained' : 'outlined'}
@@ -155,6 +150,7 @@ export default function UnloggedLayout() {
 					</Button>
 				</div>
 
+				{!pathName.startsWith('/auth/') ? '' : children}
 				<Divider />
 
 				{!isSubmitted ? (

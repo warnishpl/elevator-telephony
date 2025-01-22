@@ -1,9 +1,11 @@
 'use client';
+
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeProvider';
 import { AlertProvider } from '@/context/AlertContext';
-import UnloggedLayout from '@/components/layout/UnloggedLayout';
+
+import IsLoggedChecker from '@/components/IsLoggedChecker/IsLoggedChecker';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -27,8 +29,7 @@ export default function RootLayout({
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
 					<AlertProvider>
-						<UnloggedLayout></UnloggedLayout>
-						{/* <LoggedLayout>{children}</LoggedLayout> */}
+						<IsLoggedChecker>{children}</IsLoggedChecker>
 					</AlertProvider>
 				</body>
 			</html>
