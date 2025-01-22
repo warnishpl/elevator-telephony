@@ -20,10 +20,10 @@ export default function IsLoggedChecker({ children }: LoggedLayoutProps) {
 				const response = await requestApi({
 					path: '/user/who-am-i',
 					method: 'GET',
-					headers: {
-						Authorization:
-							'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXVpZCI6IjA3MjkzNmY0LWU0ZmQtNGNhYi1iZjdhLWEwYmM4NWU5OWI0OSIsImlhdCI6MTczNzUwNDU4NiwiZXhwIjoxNzM3Njc3Mzg2fQ.J4kvBJnKyAQ_SXFv7V_IfQYoxuPhVbLDwqsg7I1zKvk',
-					},
+					// headers: {
+					// 	Authorization:
+					// 		'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwidXVpZCI6IjA3MjkzNmY0LWU0ZmQtNGNhYi1iZjdhLWEwYmM4NWU5OWI0OSIsImlhdCI6MTczNzUwNDU4NiwiZXhwIjoxNzM3Njc3Mzg2fQ.J4kvBJnKyAQ_SXFv7V_IfQYoxuPhVbLDwqsg7I1zKvk',
+					// },
 				});
 				if ((response as ApiResponse).status === 200) {
 					setIsLoggedIn(true);
