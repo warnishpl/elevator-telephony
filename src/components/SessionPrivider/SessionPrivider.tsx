@@ -5,15 +5,12 @@ interface LoggedLayoutProps {
 	children: React.ReactNode;
 }
 
-export default function IsLoggedChecker({ children }: LoggedLayoutProps) {
-
+export default function SessionProvider({ children }: LoggedLayoutProps) {
 	return (
 		<>
-		
-				<LoggedLayout>{children}</LoggedLayout>
-			
-				<UnloggedLayout>{children}</UnloggedLayout>
-		
+			<LoggedLayout>{children}</LoggedLayout>
+
+			<UnloggedLayout>{children}</UnloggedLayout>
 		</>
 	);
 }

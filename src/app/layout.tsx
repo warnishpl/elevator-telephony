@@ -5,7 +5,7 @@ import './globals.css';
 import { ThemeProvider } from '@/context/ThemeProvider';
 import { AlertProvider } from '@/context/AlertContext';
 
-import IsLoggedChecker from '@/components/IsLoggedChecker/IsLoggedChecker';
+import SessionProvider from '@/components/SessionPrivider/SessionPrivider';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -29,7 +29,7 @@ export default function RootLayout({
 					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				>
 					<AlertProvider>
-						<IsLoggedChecker>{children}</IsLoggedChecker>
+						<SessionProvider>{children}</SessionProvider>
 					</AlertProvider>
 				</body>
 			</html>

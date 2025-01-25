@@ -16,34 +16,27 @@ interface ApiResponse {
 export default function TopBarContainer({
 	isSidebarOpen,
 	toggleSidebar,
-}: TopBarContainerProps) {
+}: Readonly<TopBarContainerProps>) {
 	const context = useTheme();
-
-	const [fullName, setFullName] = useState<string>('');
 	const { requestApi } = useRequestApi();
 
-	useEffect(() => {
-		const checkWhoAmI = async () => {
-			try {
-				const response = await requestApi({
-					path: '/user/who-am-i',
-					method: 'GET',
-				});
-				const userData = response as ApiResponse;
+	const [fullName, setFullName] = useState<string>('');
 
-				if (userData) {
-					const { firstName, lastName } = userData.data || {};
-
-					if (firstName && lastName) {
-						setFullName(`${firstName} ${lastName}`);
-					}
-				}
-			} catch (error) {
-				console.error(error);
+	function handleUserData(response: ApiResponse) {
+		if (response) {
+			const { firstName, lastName } = response.data || {};
+			if (firstName && lastName) {
+				setFullName(`${firstName} ${lastName}`);
 			}
-		};
+		}
+	}
 
-		checkWhoAmI();
+	useEffect(() => {
+		requestApi<ApiResponse>({
+			path: '/user/who-am-i',
+			method: 'GET',
+			onError: console.error,
+		}).then((res) => handleUserData(res));
 	}, []);
 
 	if (!context) {
