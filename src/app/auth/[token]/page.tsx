@@ -1,19 +1,21 @@
 'use client';
 
+import Home from '@/app/page';
 import { useRequestApi } from '@/utils/useRequestApi';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Auth() {
 	const { token } = useParams();
 	const { requestApi } = useRequestApi();
 
-	const [loading, setLoading] = useState<boolean>(false);
-
 	useEffect(() => {
-		async function getUserData() {
-			setLoading(true);
+		if (!token) {
+			return;
+		}
+
+		const fetchData = async () => {
 			try {
 				await requestApi({
 					path: `/auth/email/${token}`,
@@ -27,17 +29,11 @@ export default function Auth() {
 						data: error.response?.data,
 					});
 				}
-			} finally {
-				setLoading(false);
 			}
-		}
+		};
 
-		if (token) {
-			getUserData();
-		}
+		fetchData();
 	}, [token]);
 
-	return (
-		<div>{loading ? <p>Ładowanie...</p> : <p>Weryfikacja zakończona.</p>}</div>
-	);
+	return <Home></Home>;
 }

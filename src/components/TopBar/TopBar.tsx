@@ -1,12 +1,12 @@
 'use client';
 import TopBarItem from '@/components/TopBarItem/TopBarItem';
-import shrinkSidebarIcon from './../../../public/shrink-sidebar.svg';
-import expandSidebarIcon from './../../../public/expand-sidebar.svg';
-import userIcon from './../../../public/user-circle.svg';
-import settingsIcon from './../../../public/settings.svg';
-import newMessageIcon from './../../../public/message-exclamation.svg';
-import moonIcon from './../../../public/moon.svg';
-import sunIcon from './../../../public/sun.svg';
+import shrinkSidebarIcon from 'public/shrink-sidebar.svg';
+import expandSidebarIcon from 'public/expand-sidebar.svg';
+import userIcon from 'public/user-circle.svg';
+import settingsIcon from 'public/settings.svg';
+import newMessageIcon from 'public/message-exclamation.svg';
+import moonIcon from 'public/moon.svg';
+import sunIcon from 'public/sun.svg';
 
 interface TopBarProps {
 	isSidebarOpen: boolean;

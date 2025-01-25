@@ -1,8 +1,8 @@
 'use client';
 import SidebarItem from '@/components/SideBarItem/SidebarItem';
-import homeIcon from './../../../public/home.svg';
-import aboutIcon from './../../../public/about.svg';
-import elevatorIcon from './../../../public/elevators.svg';
+import homeIcon from 'public/home.svg';
+import aboutIcon from 'public/about.svg';
+import elevatorIcon from 'public/elevators.svg';
 
 interface SidebarProps {
 	pathname: string;
