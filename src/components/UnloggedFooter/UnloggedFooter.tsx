@@ -1,9 +1,20 @@
-import { Link } from "@mui/material";
+import { Box, Link, Typography, useTheme } from '@mui/material';
 
 export function UnloggedFooter() {
+	const theme = useTheme();
 	return (
-		<div className='flex flex-col gap-2 pt-4'>
-			<span className='text-center'>
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '0.5rem',
+				paddingTop: '1rem',
+			}}
+		>
+			<Typography
+				component='span'
+				sx={{ textAlign: 'center', color: theme.palette.text.primary }}
+			>
 				Nie masz konta?{' '}
 				<Link
 					href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
@@ -11,7 +22,7 @@ export function UnloggedFooter() {
 				>
 					Masz pecha
 				</Link>
-			</span>
-		</div>
+			</Typography>
+		</Box>
 	);
 }

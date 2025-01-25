@@ -2,6 +2,7 @@ import sitemarkIcon from 'public/sitemark.svg';
 import moonIcon from 'public/moon.svg';
 import sunIcon from 'public/sun.svg';
 import Image from 'next/image';
+import { Box, Button } from '@mui/material';
 
 export function UnloggedHeader({
 	isDarkMode,
@@ -11,18 +12,33 @@ export function UnloggedHeader({
 	toggleTheme: () => void;
 }) {
 	return (
-		<div className='flex flex-row justify-between'>
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'row',
+				justifyContent: 'space-between',
+			}}
+		>
 			<Image priority src={sitemarkIcon} alt='sitemark-icon' />
-			<button onClick={toggleTheme} className='mr-2'>
-				<div className='flex justify-center items-center rounded p-1 hover:bg-menuSecondary transition-all duration-300 ease-in-out'>
+			<Button onClick={toggleTheme} sx={{ marginRight: '0.5rem' }}>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						borderRadius: '0.25rem',
+						padding: '0.25rem',
+						transition: 'all 0.3s ease-in-out',
+					}}
+				>
 					<Image
 						src={isDarkMode ? moonIcon : sunIcon}
 						alt='theme-button'
 						width={24}
 						height={24}
 					/>
-				</div>
-			</button>
-		</div>
+				</Box>
+			</Button>
+		</Box>
 	);
 }

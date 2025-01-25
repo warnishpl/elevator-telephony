@@ -1,12 +1,28 @@
 'use client';
-import TopBarItem from '@/components/TopBarItem/TopBarItem';
-import shrinkSidebarIcon from 'public/shrink-sidebar.svg';
-import expandSidebarIcon from 'public/expand-sidebar.svg';
-import userIcon from 'public/user-circle.svg';
-import settingsIcon from 'public/settings.svg';
-import newMessageIcon from 'public/message-exclamation.svg';
-import moonIcon from 'public/moon.svg';
-import sunIcon from 'public/sun.svg';
+import {
+	Avatar,
+	Badge,
+	Divider,
+	ListItemIcon,
+	Menu,
+	MenuItem,
+	Stack,
+	Tooltip,
+	useTheme,
+} from '@mui/material';
+import {
+	WbSunnyOutlined,
+	BedtimeOutlined,
+	Settings,
+	MenuOutlined,
+	MenuOpenOutlined,
+	EmailOutlined,
+	SearchOutlined,
+	PersonAdd,
+	Logout,
+} from '@mui/icons-material';
+import { Box, Button, InputAdornment, TextField } from '@mui/material';
+import { useState } from 'react';
 
 interface TopBarProps {
 	isSidebarOpen: boolean;
@@ -23,35 +39,155 @@ export default function TopBar({
 	toggleTheme,
 	fullName,
 }: TopBarProps) {
-	const containerClassName = isSidebarOpen ? 'pl-64' : 'pl-16';
+	const theme = useTheme();
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+	const openPersonalMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const closePersonalMenu = () => {
+		setAnchorEl(null);
+	};
 
 	return (
-		<div
-			className={`flex flex-row w-full h-16 items-center bg-menuPrimary transition-all duration-300 ease-in-out  ${containerClassName}`}
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'row',
+				alignItems: 'center',
+				height: '4rem',
+				paddingLeft: isSidebarOpen ? '16rem' : '4rem',
+				transition: 'all 0.3s ease-in-out',
+				background: theme.palette.menuBackground?.main,
+			}}
 		>
-			<div className='flex items-center'>
-				<TopBarItem
-					onClick={toggleSidebar}
-					iconPath={isSidebarOpen ? shrinkSidebarIcon : expandSidebarIcon}
-				/>
-			</div>
-
-			<div>
-				<input
-					type='text'
+			<Button onClick={toggleSidebar}>
+				{!isSidebarOpen ? <MenuOutlined /> : <MenuOpenOutlined />}
+			</Button>
+			<Box
+				sx={{
+					height: '2.25rem',
+					padding: '0 10px',
+					borderRadius: theme.shape.borderRadius,
+					width: '30%',
+				}}
+			>
+				<TextField
+					id='outlined-basic'
+					variant='outlined'
 					placeholder='Wyszukaj'
-					className={`h-9 w-96 pl-7 ml-2 pr-2 rounded-md border-2 border-transparent bg-inputBackground text-text bg-no-repeat bg-[3px_50%] transition-all duration-300 ease-in-out focus:outline-none focus:border-menuSecondary`}
+					type='text'
+					size='small'
+					slotProps={{
+						input: {
+							startAdornment: (
+								<InputAdornment position='start'>
+									<SearchOutlined sx={{ color: theme.palette.primary.main }} />
+								</InputAdornment>
+							),
+						},
+					}}
+					sx={{ width: { sx: '15rem', sm: '25rem' } }}
 				/>
-			</div>
-			<div className='ml-auto flex items-center'>
-				<TopBarItem iconPath={newMessageIcon}></TopBarItem>
-				<TopBarItem
-					iconPath={isDarkMode ? moonIcon : sunIcon}
-					onClick={toggleTheme}
-				></TopBarItem>
-				<TopBarItem iconPath={settingsIcon}></TopBarItem>
-				<TopBarItem iconPath={userIcon}>{fullName}</TopBarItem>
-			</div>
-		</div>
+			</Box>
+
+			<Stack direction='row' marginLeft='auto'>
+				<Tooltip title='Wiadomości'>
+					<Button>
+						<Badge badgeContent={4} color='error'>
+							<EmailOutlined />
+						</Badge>
+					</Button>
+				</Tooltip>
+				<Tooltip title='Zmiana skórki'>
+					<Button onClick={toggleTheme}>
+						{isDarkMode ? <WbSunnyOutlined /> : <BedtimeOutlined />}
+					</Button>
+				</Tooltip>
+				<Tooltip title='Ustawienia'>
+					<Button>
+						<Settings />
+					</Button>
+				</Tooltip>
+				<Tooltip title='Konto'>
+					<Button
+						onClick={openPersonalMenu}
+						startIcon={
+							<Avatar sx={{ bgcolor: theme.palette.primary.main }}>
+								{fullName.slice(0, 1)}
+							</Avatar>
+						}
+					>
+						{fullName}
+					</Button>
+				</Tooltip>
+			</Stack>
+			<Menu
+				anchorEl={anchorEl}
+				id='account-menu'
+				open={open}
+				onClose={closePersonalMenu}
+				onClick={closePersonalMenu}
+				slotProps={{
+					paper: {
+						elevation: 0,
+						sx: {
+							background: theme.palette.menuBackground?.main,
+							color: theme.palette.text.primary,
+							overflow: 'visible',
+							filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+							mt: 1.5,
+							'& .MuiAvatar-root': {
+								width: 32,
+								height: 32,
+								ml: -0.5,
+								mr: 1,
+								bgcolor: theme.palette.primary.main,
+							},
+							'&::before': {
+								content: '""',
+								display: 'block',
+								position: 'absolute',
+								top: 0,
+								right: 14,
+								width: 10,
+								height: 10,
+								bgcolor: theme.palette.menuBackground?.main,
+								transform: 'translateY(-50%) rotate(45deg)',
+								zIndex: 0,
+							},
+						},
+					},
+				}}
+				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+			>
+				<MenuItem onClick={closePersonalMenu}>
+					<Avatar /> Profil
+				</MenuItem>
+				<MenuItem onClick={closePersonalMenu}>
+					<Avatar /> Moje konto
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={closePersonalMenu}>
+					<ListItemIcon>
+						<PersonAdd sx={{color: theme.palette.primary.main}} fontSize='small' />
+					</ListItemIcon>
+					Dodaj kolejne konto
+				</MenuItem>
+				<MenuItem onClick={closePersonalMenu}>
+					<ListItemIcon>
+						<Settings sx={{color: theme.palette.primary.main}} fontSize='small' />
+					</ListItemIcon>
+					Ustawienia
+				</MenuItem>
+				<MenuItem onClick={closePersonalMenu}>
+					<ListItemIcon>
+						<Logout sx={{color: theme.palette.primary.main}} fontSize='small' />
+					</ListItemIcon>
+					Wyloguj się
+				</MenuItem>
+			</Menu>
+		</Box>
 	);
 }

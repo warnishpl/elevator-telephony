@@ -1,45 +1,73 @@
 'use client';
-import SidebarItem from '@/components/SideBarItem/SidebarItem';
-import homeIcon from 'public/home.svg';
-import aboutIcon from 'public/about.svg';
-import elevatorIcon from 'public/elevators.svg';
+import { Box, List, useTheme } from '@mui/material';
+import {
+	EngineeringOutlined,
+	EscalatorOutlined,
+	HomeOutlined,
+	InfoOutlined,
+} from '@mui/icons-material';
+import Image from 'next/image';
+import sitemarkLogoIcon from './../../../public/sitemark-logo.svg';
+import { SidebarItem } from '../SidebarItem/SidebarItem';
 
 interface SidebarProps {
 	pathname: string;
 	isSidebarOpen: boolean;
 }
 export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
-	const containerClassName = isSidebarOpen ? 'w-64' : 'w-16';
+	const theme = useTheme();
+
 	return (
-		<div
-			className={`fixed top-0 left-0 h-screen bg-menuPrimary text-text transition-all duration-300 ease-in-out transform ${containerClassName}`}
+		<Box
+			position='fixed'
+			left='0'
+			top='0'
+			height='100vh'
+			sx={{
+				width: isSidebarOpen ? '16rem' : '4rem',
+				transition: 'all 0.3s ease-in-out',
+				background: theme.palette.menuBackground?.main,
+			}}
 		>
-			<nav className='p-4'>
+			<Image
+				src={sitemarkLogoIcon}
+				alt='logo'
+				style={{ height: '4rem', padding: '10px' }}
+			></Image>
+			<List disablePadding>
 				<SidebarItem
-					isActive={pathname}
-					isOpen={isSidebarOpen}
-					iconPath={homeIcon}
-					href='/'
+					pathname={pathname}
+					isSidebarOpen={isSidebarOpen}
+					path='/'
+					icon={<HomeOutlined />}
 				>
 					Home
 				</SidebarItem>
 				<SidebarItem
-					isActive={pathname}
-					isOpen={isSidebarOpen}
-					iconPath={aboutIcon}
-					href='/about'
+					pathname={pathname}
+					isSidebarOpen={isSidebarOpen}
+					path='/about'
+					icon={<InfoOutlined />}
 				>
 					About
 				</SidebarItem>
 				<SidebarItem
-					isActive={pathname}
-					isOpen={isSidebarOpen}
-					iconPath={elevatorIcon}
-					href='/elevators'
+					pathname={pathname}
+					isSidebarOpen={isSidebarOpen}
+					path='/elevators'
+					icon={<EscalatorOutlined />}
 				>
-					Elevators
+					Windy
 				</SidebarItem>
-			</nav>
-		</div>
+				<SidebarItem
+					pathname={pathname}
+					isSidebarOpen={isSidebarOpen}
+					path='/employees'
+					icon={<EngineeringOutlined />}
+				>
+					Pracownicy
+				</SidebarItem>
+			</List>
+		</Box>
 	);
 }

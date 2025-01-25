@@ -9,8 +9,7 @@ export default function SessionProvider({ children }: LoggedLayoutProps) {
 	return (
 		<>
 			<LoggedLayout>{children}</LoggedLayout>
-
-			<UnloggedLayout>{children}</UnloggedLayout>
+			{/* <UnloggedLayout>{children}</UnloggedLayout> */}
 		</>
 	);
 }

@@ -1,32 +1,52 @@
-'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-
+import {
+	ListItem,
+	ListItemButton,
+	ListItemIcon,
+	ListItemText,
+	useTheme,
+} from '@mui/material';
 interface SidebarItemProps {
-	isOpen: boolean;
-	children: string;
-	iconPath: string;
-	href: string;
-	isActive: string;
+	pathname: string;
+	isSidebarOpen: boolean;
+	children: React.ReactNode;
+	icon: React.ReactNode;
+	path: string;
 }
-export default function SidebarItem({
-	isOpen,
+export function SidebarItem({
 	children,
-	iconPath,
-	href,
-	isActive,
+	pathname,
+	isSidebarOpen,
+	path,
+	icon,
 }: SidebarItemProps) {
-	const containerClassName = isActive
-		? 'bg-menuSecondary hover:bg-menuTertiary'
-		: '';
+	const theme = useTheme();
+
 	return (
-		<Link href={href}>
-			<div
-				className={`flex justify-between items-center p-2 mb-[2px] rounded  hover:bg-menuSecondary transition-all duration-300 ease-in-out transform ${containerClassName}`}
+		<ListItem
+			disablePadding
+			sx={{
+				background:
+					pathname === path
+						? theme.palette.primary.main
+						: theme.palette.menuBackground?.main,
+				'&:hover': {
+					background: theme.palette.primaryHover?.main,
+				},
+				transition: 'all 0.3s ease-in-out',
+			}}
+		>
+			<ListItemButton
+				component='a'
+				href={`${path}`}
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+				}}
 			>
-				<Image src={iconPath} alt={children} width={24} height={24} />
-				<div>{isOpen && children}</div>
-			</div>
-		</Link>
+				<ListItemIcon>{icon}</ListItemIcon>
+				{isSidebarOpen ? <ListItemText primary={`${children}`} /> : ''}
+			</ListItemButton>
+		</ListItem>
 	);
 }

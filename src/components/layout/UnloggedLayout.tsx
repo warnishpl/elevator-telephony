@@ -12,12 +12,9 @@ import { UnloggedContentSection } from '../UnloggedContentSection/UnloggedConten
 import { UnloggedFooter } from '../UnloggedFooter/UnloggedFooter';
 import { Option } from './../../app/auth/auth.types';
 
-
 interface LoggedLayoutProps {
 	children: React.ReactNode;
 }
-
-
 
 export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 	const { requestApi } = useRequestApi();
@@ -104,7 +101,7 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 	}
 
 	return (
-		<Stack className='h-dvh p-2 bg-menuPrimary'>
+		<Stack className='h-dvh p-2'>
 			<MuiCard
 				variant='outlined'
 				className={`flex flex-col self-center w-full px-4 py-10 gap-2 m-auto max-w-[450px] 
@@ -132,15 +129,8 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 					setPhoneNumber={setPhoneNumber}
 					setVerificationCode={setVerificationCode}
 				/>
-				<UnloggedFooter/>
+				<UnloggedFooter />
 			</MuiCard>
 		</Stack>
 	);
 }
-
-
-
-
-
-
-

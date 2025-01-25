@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
 import { ChangeEvent } from 'react';
 import {
 	Option,
@@ -25,6 +25,7 @@ export function UnloggedContentSection({
 	InputErrorStateProps &
 	handlersProps &
 	isSubmittedProp & { activeOption: Option }) {
+	const theme = useTheme();
 	if (!isSubmitted) {
 		return (
 			<>
@@ -73,7 +74,7 @@ export function UnloggedContentSection({
 	}
 
 	return activeOption === Option.Phone ? (
-		<div className='flex flex-col gap-4'>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 			<TextField
 				error={inputError}
 				helperText={inputErrorMessage}
@@ -97,10 +98,13 @@ export function UnloggedContentSection({
 			>
 				Zatwierdź kod
 			</Button>
-		</div>
+		</Box>
 	) : (
-		<p className='text-center text-green-600'>
+		<Typography
+			component='p'
+			sx={{ textAlign: 'center', color: theme.palette.primary.main }}
+		>
 			Sprawdź swoją skrzynkę pocztową i postępuj zgodnie z instrukcjami.
-		</p>
+		</Typography>
 	);
 }
