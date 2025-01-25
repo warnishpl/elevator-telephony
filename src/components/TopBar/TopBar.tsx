@@ -13,6 +13,7 @@ interface TopBarProps {
 	toggleSidebar: () => void;
 	isDarkMode: boolean;
 	toggleTheme: () => void;
+	fullName: string;
 }
 
 export default function TopBar({
@@ -20,6 +21,7 @@ export default function TopBar({
 	toggleSidebar,
 	isDarkMode,
 	toggleTheme,
+	fullName,
 }: TopBarProps) {
 	const containerClassName = isSidebarOpen ? 'pl-64' : 'pl-16';
 
@@ -48,7 +50,7 @@ export default function TopBar({
 					onClick={toggleTheme}
 				></TopBarItem>
 				<TopBarItem iconPath={settingsIcon}></TopBarItem>
-				<TopBarItem iconPath={userIcon}>Michał</TopBarItem>
+				<TopBarItem iconPath={userIcon}>{fullName}</TopBarItem>
 			</div>
 		</div>
 	);
