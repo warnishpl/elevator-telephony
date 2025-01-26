@@ -48,7 +48,9 @@ export default function TopBar({
 	const closePersonalMenu = () => {
 		setAnchorEl(null);
 	};
-
+	function handleLogout() {
+		//zapytanie do api odsylajace Set-Cookie z data wygasniecia w przeszlosci
+	}
 	return (
 		<Box
 			sx={{
@@ -61,9 +63,11 @@ export default function TopBar({
 				background: theme.palette.menuBackground?.main,
 			}}
 		>
-			<Button onClick={toggleSidebar}>
-				{!isSidebarOpen ? <MenuOutlined /> : <MenuOpenOutlined />}
-			</Button>
+			<Tooltip title='Menu boczne'>
+				<Button onClick={toggleSidebar}>
+					{!isSidebarOpen ? <MenuOutlined /> : <MenuOpenOutlined />}
+				</Button>
+			</Tooltip>
 			<Box
 				sx={{
 					height: '2.25rem',
@@ -171,19 +175,33 @@ export default function TopBar({
 				<Divider />
 				<MenuItem onClick={closePersonalMenu}>
 					<ListItemIcon>
-						<PersonAdd sx={{color: theme.palette.primary.main}} fontSize='small' />
+						<PersonAdd
+							sx={{ color: theme.palette.primary.main }}
+							fontSize='small'
+						/>
 					</ListItemIcon>
 					Dodaj kolejne konto
 				</MenuItem>
 				<MenuItem onClick={closePersonalMenu}>
 					<ListItemIcon>
-						<Settings sx={{color: theme.palette.primary.main}} fontSize='small' />
+						<Settings
+							sx={{ color: theme.palette.primary.main }}
+							fontSize='small'
+						/>
 					</ListItemIcon>
 					Ustawienia
 				</MenuItem>
-				<MenuItem onClick={closePersonalMenu}>
+				<MenuItem
+					onClick={() => {
+						closePersonalMenu();
+						handleLogout();
+					}}
+				>
 					<ListItemIcon>
-						<Logout sx={{color: theme.palette.primary.main}} fontSize='small' />
+						<Logout
+							sx={{ color: theme.palette.primary.main }}
+							fontSize='small'
+						/>
 					</ListItemIcon>
 					Wyloguj się
 				</MenuItem>

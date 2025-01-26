@@ -1,8 +1,7 @@
 import sitemarkIcon from 'public/sitemark.svg';
-import moonIcon from 'public/moon.svg';
-import sunIcon from 'public/sun.svg';
 import Image from 'next/image';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Tooltip } from '@mui/material';
+import { BedtimeOutlined, WbSunnyOutlined } from '@mui/icons-material';
 
 export function UnloggedHeader({
 	isDarkMode,
@@ -30,15 +29,13 @@ export function UnloggedHeader({
 						padding: '0.25rem',
 						transition: 'all 0.3s ease-in-out',
 					}}
-				>
-					<Image
-						src={isDarkMode ? moonIcon : sunIcon}
-						alt='theme-button'
-						width={24}
-						height={24}
-					/>
-				</Box>
+				></Box>
 			</Button>
+			<Tooltip title='Zmiana skórki'>
+				<Button onClick={toggleTheme}>
+					{isDarkMode ? <WbSunnyOutlined /> : <BedtimeOutlined />}
+				</Button>
+			</Tooltip>
 		</Box>
 	);
 }

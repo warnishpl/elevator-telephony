@@ -68,27 +68,16 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 		provider: 'PHONE' | 'EMAIL',
 		verificationCode?: string
 	) {
-		try {
-			const phoneData = !verificationCode
-				? { provider: 'PHONE', phoneNumber: login }
-				: { provider: 'PHONE', phoneNumber: login, code: verificationCode };
-			const data =
-				provider === 'EMAIL' ? { provider: 'EMAIL', email: login } : phoneData;
-			const response = await requestApi({
-				path: '/auth/login',
-				method: 'POST',
-				data,
-			});
-			console.log(response);
-			console.log('fetchUserData success');
-		} catch (error) {
-			console.error(
-				`Błąd podczas logowania za pomocą ${
-					provider === 'PHONE' ? 'telefonu' : 'emaila'
-				}:`,
-				error
-			);
-		}
+		const phoneData = !verificationCode
+			? { provider: 'PHONE', phoneNumber: login }
+			: { provider: 'PHONE', phoneNumber: login, code: verificationCode };
+		const data =
+			provider === 'EMAIL' ? { provider: 'EMAIL', email: login } : phoneData;
+		await requestApi({
+			path: '/auth/login',
+			method: 'POST',
+			data,
+		});
 	}
 
 	async function handleCodeSubmit() {

@@ -3,7 +3,7 @@
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import { AlertProvider } from '@/context/AlertContext';
-import SessionProvider from '@/components/SessionProvider/SessionProvider';
+import SessionProvider from '@/context/SessionProvider';
 import { ThemeProvider } from '@/context/ThemeProvider';
 
 const roboto = Roboto({
@@ -18,6 +18,7 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+
 	return (
 		<ThemeProvider>
 			<html lang='en'>
