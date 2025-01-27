@@ -37,7 +37,6 @@ export default function Elevators() {
 				path: '/elevator',
 				method: 'GET',
 			});
-			console.log(response);
 			setElevatorsList(
 				response.data.map((elevator, index) => ({
 					...elevator,

@@ -2,12 +2,13 @@
 
 import Home from '@/app/page';
 import { useRequestApi } from '@/utils/useRequestApi';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Auth() {
 	const { token } = useParams();
 	const { requestApi } = useRequestApi();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (!token) {
@@ -16,6 +17,8 @@ export default function Auth() {
 		requestApi({
 			path: `/auth/email/${token}`,
 			method: 'GET',
+		}).then(() => {
+			router.replace('/');
 		});
 	}, [token]);
 

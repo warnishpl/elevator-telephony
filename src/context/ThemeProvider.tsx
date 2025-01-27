@@ -42,7 +42,7 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 	const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-	const [isThemeLoaded, setIsThemeLoaded] = useState<boolean>(false); 
+	const [isThemeLoaded, setIsThemeLoaded] = useState<boolean>(false);
 
 	useEffect(() => {
 		const storedTheme = localStorage.getItem('theme');

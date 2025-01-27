@@ -19,8 +19,6 @@ export default function SessionProvider({ children }: LoggedLayoutProps) {
 
 			if (isLoggedIn === false) {
 				router.replace('/auth');
-			} else {
-				router.replace('');
 			}
 		}
 	}, [isLoggedIn, isSessionChecked, router]);

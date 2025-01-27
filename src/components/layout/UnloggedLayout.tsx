@@ -5,7 +5,7 @@ import MuiCard from '@mui/material/Card';
 import { useState } from 'react';
 import { useRequestApi } from '@/utils/useRequestApi';
 import { useTheme } from '@/context/ThemeProvider';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { UnloggedHeader } from '../UnloggedHeader/UnloggedHeader';
 import { UnloggedSelectionButtons } from '../UnloggedSelectionButtons/UnloggedSelectionButtons';
 import { UnloggedContentSection } from '../UnloggedContentSection/UnloggedContentSection';
@@ -26,7 +26,7 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 	const [inputErrorMessage, setInputErrorMessage] = useState<string>('');
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 	const pathName = usePathname();
-
+	const router = useRouter();
 	const context = useTheme();
 	const isDarkMode = context?.isDarkMode || false;
 	const toggleTheme = context?.toggleTheme || (() => {});
@@ -99,7 +99,8 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 			setInputErrorMessage('Proszę wprowadzić kod weryfikacyjny');
 			return;
 		}
-		fetchUserData(phoneNumber, Option.Phone, verificationCode);
+		fetchUserData(phoneNumber, Option.Phone, verificationCode)
+			.then(() => router.replace('/'))
 	}
 
 	return (
