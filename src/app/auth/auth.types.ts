@@ -10,9 +10,9 @@ export interface UserInputStateProps {
 }
 
 export enum Option {
-	Email = 'email',
-	Phone = 'phone',
-	None = 'none',
+	Email = 'EMAIL',
+	Phone = 'PHONE',
+	None = 'NONE',
 }
 
 export interface InputErrorStateProps {

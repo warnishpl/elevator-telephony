@@ -15,7 +15,6 @@ declare module '@mui/material/styles' {
 		primaryHover?: {
 			main: string;
 		};
-
 	}
 
 	interface PaletteOptions {
@@ -43,6 +42,7 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 	const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+	const [isThemeLoaded, setIsThemeLoaded] = useState<boolean>(false); 
 
 	useEffect(() => {
 		const storedTheme = localStorage.getItem('theme');
@@ -51,6 +51,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 		).matches;
 
 		setIsDarkMode(storedTheme === 'dark' || (!storedTheme && prefersDarkMode));
+		setIsThemeLoaded(true);
 	}, []);
 
 	useEffect(() => {
@@ -60,6 +61,11 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 	const toggleTheme = () => {
 		setIsDarkMode((prevMode) => !prevMode);
 	};
+
+	if (!isThemeLoaded) {
+		return null;
+	}
+
 	const theme = createTheme({
 		palette: {
 			mode: isDarkMode ? 'dark' : 'light',
@@ -83,7 +89,6 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 			fontFamily: `'Roboto', 'Helvetica', 'Arial', sans-serif`,
 		},
 	});
-	
 
 	return (
 		<ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>

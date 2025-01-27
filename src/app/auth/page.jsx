@@ -1,10 +1,12 @@
+'use client';
+import { Box } from '@mui/material';
 import UnloggedLayout from './../../components/layout/UnloggedLayout';
 
 export default function Auth({ children }) {
+
 	return (
-		<>
-			asdsad
-			<UnloggedLayout>{children}</UnloggedLayout>;
-		</>
+		<Box>
+			<UnloggedLayout>{children}</UnloggedLayout>
+		</Box>
 	);
 }

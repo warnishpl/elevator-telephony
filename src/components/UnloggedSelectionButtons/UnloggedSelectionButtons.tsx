@@ -8,6 +8,11 @@ export function UnloggedSelectionButtons({
 	activeOption: Option;
 	handleOptionClick: (option: Option) => void;
 }) {
+	const LoginOptionButtonsArray = [
+		{ label: 'Email', value: Option.Email },
+		{ label: 'Telefon', value: Option.Phone },
+	];
+
 	return (
 		<Box
 			sx={{
@@ -18,20 +23,16 @@ export function UnloggedSelectionButtons({
 				marginTop: '1rem',
 			}}
 		>
-			<Button
-				variant={activeOption === Option.Email ? 'contained' : 'outlined'}
-				onClick={() => handleOptionClick(Option.Email)}
-				sx={{ width: { xs: '50%', sm: '100%' } }}
-			>
-				Email
-			</Button>
-			<Button
-				variant={activeOption === Option.Phone ? 'contained' : 'outlined'}
-				onClick={() => handleOptionClick(Option.Phone)}
-				sx={{ width: { xs: '50%', sm: '100%' } }}
-			>
-				Telefon
-			</Button>
+			{LoginOptionButtonsArray.map((button) => (
+				<Button
+					key={button.value}
+					variant={activeOption === button.value ? 'contained' : 'outlined'}
+					onClick={() => handleOptionClick(button.value)}
+					sx={{ width: { xs: '50%', sm: '100%' } }}
+				>
+					{button.label}
+				</Button>
+			))}
 		</Box>
 	);
 }

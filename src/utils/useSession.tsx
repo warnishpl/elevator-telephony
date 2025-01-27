@@ -5,6 +5,7 @@ import { useRequestApi } from './../utils/useRequestApi';
 
 interface SessionState {
 	isLoggedIn: boolean | null;
+	isSessionChecked: boolean;
 	userData?: object;
 }
 interface ApiResponse {
@@ -13,6 +14,7 @@ interface ApiResponse {
 
 export const useSession = (): SessionState => {
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+	const [isSessionChecked, setIsSessionChecked] = useState(false); 
 
 	const { requestApi } = useRequestApi();
 
@@ -28,13 +30,11 @@ export const useSession = (): SessionState => {
 		requestApi<ApiResponse>({
 			path: '/user/who-am-i',
 			method: 'GET',
-			onError: () => {
-				setIsLoggedIn(false);
-			},
 		})
 			.then((res) => handleUserData(res))
-			.catch(() => setIsLoggedIn(false));
+			.catch(() => setIsLoggedIn(false))
+			.finally(() => setIsSessionChecked(true));
 	}, []);
 
-	return { isLoggedIn };
+	return { isLoggedIn, isSessionChecked };
 };

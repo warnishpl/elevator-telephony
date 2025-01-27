@@ -49,7 +49,7 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 				setInputErrorMessage('Nieprawidłowy numer telefonu');
 				return;
 			}
-			await fetchUserData(phoneNumber, 'PHONE');
+			await fetchUserData(phoneNumber, Option.Phone);
 			setIsSubmitted(true);
 		} else if (activeOption === Option.Email) {
 			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,26 +58,39 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 				setInputErrorMessage('Nieprawidłowy adres email');
 				return;
 			}
-			await fetchUserData(email, 'EMAIL');
+			await fetchUserData(email, Option.Email);
 			setIsSubmitted(true);
 		}
 	}
 
 	async function fetchUserData(
 		login: string,
-		provider: 'PHONE' | 'EMAIL',
+		provider: Option,
 		verificationCode?: string
 	) {
-		const phoneData = !verificationCode
-			? { provider: 'PHONE', phoneNumber: login }
-			: { provider: 'PHONE', phoneNumber: login, code: verificationCode };
+		const phoneData =
+			provider === Option.Phone
+				? !verificationCode
+					? { provider: Option.Phone, phoneNumber: login }
+					: {
+							provider: Option.Phone,
+							phoneNumber: login,
+							code: verificationCode,
+					  }
+				: null;
+
 		const data =
-			provider === 'EMAIL' ? { provider: 'EMAIL', email: login } : phoneData;
-		await requestApi({
-			path: '/auth/login',
-			method: 'POST',
-			data,
-		});
+			provider === Option.Email
+				? { provider: Option.Email, email: login }
+				: phoneData;
+
+		if (data) {
+			await requestApi({
+				path: '/auth/login',
+				method: 'POST',
+				data,
+			});
+		}
 	}
 
 	async function handleCodeSubmit() {
@@ -86,7 +99,7 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 			setInputErrorMessage('Proszę wprowadzić kod weryfikacyjny');
 			return;
 		}
-		fetchUserData(phoneNumber, 'PHONE', verificationCode);
+		fetchUserData(phoneNumber, Option.Phone, verificationCode);
 	}
 
 	return (

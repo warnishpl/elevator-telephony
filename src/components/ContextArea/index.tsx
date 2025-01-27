@@ -1,5 +1,7 @@
 'use client';
 
+import { Box } from '@mui/material';
+
 interface ContextAreaProps {
 	children: React.ReactNode;
 	isSidebarOpen: boolean;
@@ -8,13 +10,16 @@ export default function ContextArea({
 	children,
 	isSidebarOpen,
 }: ContextAreaProps) {
-	const containerClassName = isSidebarOpen ? 'ml-64' : 'ml-16';
-
 	return (
-		<div
-			className={`transition-all  px-10 py-2 duration-300  ease-in-out transform ${containerClassName}`}
+		<Box
+			sx={{
+				paddingY: '2rem',
+				paddingX: '5rem',
+				transition: 'all 0.3s ease-in-out',
+				marginLeft: isSidebarOpen ? '16rem' : '4rem',
+			}}
 		>
 			{children}
-		</div>
+		</Box>
 	);
 }

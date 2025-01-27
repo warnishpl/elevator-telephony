@@ -18,16 +18,15 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-
 	return (
-		<ThemeProvider>
-			<html lang='en'>
-				<body className={roboto.className}>
+		<html lang='en'>
+			<body className={roboto.className}>
+				<ThemeProvider>
 					<AlertProvider>
 						<SessionProvider>{children}</SessionProvider>
 					</AlertProvider>
-				</body>
-			</html>
-		</ThemeProvider>
+				</ThemeProvider>
+			</body>
+		</html>
 	);
 }

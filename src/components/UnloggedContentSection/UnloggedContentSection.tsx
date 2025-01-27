@@ -26,41 +26,52 @@ export function UnloggedContentSection({
 	handlersProps &
 	isSubmittedProp & { activeOption: Option }) {
 	const theme = useTheme();
+
+	const inputFields = [
+		{
+			option: Option.Email,
+			id: 'email',
+			type: 'email',
+			name: 'email',
+			placeholder: 'twoj@email.com',
+			autoComplete: 'email',
+			value: email,
+			setValue: setEmail,
+		},
+		{
+			option: Option.Phone,
+			id: 'phone',
+			type: 'tel',
+			name: 'phone',
+			placeholder: '796 152 116',
+			autoComplete: 'phone',
+			value: phoneNumber,
+			setValue: setPhoneNumber,
+		},
+	];
+
 	if (!isSubmitted) {
 		return (
 			<>
-				{activeOption === Option.Email && (
-					<TextField
-						error={inputError}
-						helperText={inputErrorMessage}
-						id='email'
-						type='email'
-						name='email'
-						placeholder='twoj@email.com'
-						autoComplete='email'
-						autoFocus
-						fullWidth
-						variant='outlined'
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				)}
-				{activeOption === Option.Phone && (
-					<TextField
-						error={inputError}
-						helperText={inputErrorMessage}
-						name='phone'
-						placeholder='796 152 116'
-						type='tel'
-						id='phone'
-						autoComplete='phone'
-						autoFocus
-						fullWidth
-						variant='outlined'
-						value={phoneNumber}
-						onChange={(e) => setPhoneNumber(e.target.value)}
-					/>
-				)}
+				{inputFields
+					.filter((field) => field.option === activeOption)
+					.map((field) => (
+						<TextField
+							key={field.id}
+							error={inputError}
+							helperText={inputErrorMessage}
+							id={field.id}
+							type={field.type}
+							name={field.name}
+							placeholder={field.placeholder}
+							autoComplete={field.autoComplete}
+							autoFocus
+							fullWidth
+							variant='outlined'
+							value={field.value}
+							onChange={(e) => field.setValue(e.target.value)}
+						/>
+					))}
 				<Button
 					type='button'
 					fullWidth
@@ -72,7 +83,6 @@ export function UnloggedContentSection({
 			</>
 		);
 	}
-
 	return activeOption === Option.Phone ? (
 		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 			<TextField

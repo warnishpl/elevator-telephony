@@ -16,7 +16,36 @@ interface SidebarProps {
 }
 export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
 	const theme = useTheme();
-
+	const sidebarItemsArray = [
+		{
+			pathname,
+			isSidebarOpen,
+			path: '/',
+			icon: <HomeOutlined />,
+			label: 'Home',
+		},
+		{
+			pathname,
+			isSidebarOpen,
+			path: '/about',
+			icon: <InfoOutlined />,
+			label: 'About',
+		},
+		{
+			pathname,
+			isSidebarOpen,
+			path: '/elevators',
+			icon: <EscalatorOutlined />,
+			label: 'Windy',
+		},
+		{
+			pathname,
+			isSidebarOpen,
+			path: '/employees',
+			icon: <EngineeringOutlined />,
+			label: 'Pracownicy',
+		},
+	];
 	return (
 		<Box
 			position='fixed'
@@ -35,38 +64,19 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
 				style={{ height: '4rem', padding: '10px' }}
 			></Image>
 			<List disablePadding>
-				<SidebarItem
-					pathname={pathname}
-					isSidebarOpen={isSidebarOpen}
-					path='/'
-					icon={<HomeOutlined />}
-				>
-					Home
-				</SidebarItem>
-				<SidebarItem
-					pathname={pathname}
-					isSidebarOpen={isSidebarOpen}
-					path='/about'
-					icon={<InfoOutlined />}
-				>
-					About
-				</SidebarItem>
-				<SidebarItem
-					pathname={pathname}
-					isSidebarOpen={isSidebarOpen}
-					path='/elevators'
-					icon={<EscalatorOutlined />}
-				>
-					Windy
-				</SidebarItem>
-				<SidebarItem
-					pathname={pathname}
-					isSidebarOpen={isSidebarOpen}
-					path='/employees'
-					icon={<EngineeringOutlined />}
-				>
-					Pracownicy
-				</SidebarItem>
+				{sidebarItemsArray &&
+					sidebarItemsArray.map((item, index) => (
+						<SidebarItem
+							label={item.label}
+							key={index}
+							isSelected={pathname === item.path}
+							isSidebarOpen={isSidebarOpen}
+							path={item.path}
+							icon={item.icon}
+						>
+							{item.label}
+						</SidebarItem>
+					))}
 			</List>
 		</Box>
 	);

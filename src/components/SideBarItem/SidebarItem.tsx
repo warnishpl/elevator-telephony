@@ -6,18 +6,19 @@ import {
 	useTheme,
 } from '@mui/material';
 interface SidebarItemProps {
-	pathname: string;
+	isSelected: boolean;
 	isSidebarOpen: boolean;
 	children: React.ReactNode;
 	icon: React.ReactNode;
 	path: string;
+	label: string;
 }
 export function SidebarItem({
-	children,
-	pathname,
+	isSelected,
 	isSidebarOpen,
 	path,
 	icon,
+	label,
 }: SidebarItemProps) {
 	const theme = useTheme();
 
@@ -25,10 +26,9 @@ export function SidebarItem({
 		<ListItem
 			disablePadding
 			sx={{
-				background:
-					pathname === path
-						? theme.palette.primary.main
-						: theme.palette.menuBackground?.main,
+				background: isSelected
+					? theme.palette.primary.main
+					: theme.palette.menuBackground?.main,
 				'&:hover': {
 					background: theme.palette.primaryHover?.main,
 				},
@@ -45,7 +45,7 @@ export function SidebarItem({
 				}}
 			>
 				<ListItemIcon>{icon}</ListItemIcon>
-				{isSidebarOpen ? <ListItemText primary={`${children}`} /> : ''}
+				{isSidebarOpen ? <ListItemText primary={`${label}`} /> : ''}
 			</ListItemButton>
 		</ListItem>
 	);
