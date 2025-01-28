@@ -1,3 +1,4 @@
+
 import { Box, Link, Typography, useTheme } from '@mui/material';
 
 export function UnloggedFooter() {

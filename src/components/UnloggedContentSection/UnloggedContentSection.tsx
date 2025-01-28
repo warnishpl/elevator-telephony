@@ -8,6 +8,7 @@ import {
 	isSubmittedProp,
 } from '../../app/auth/auth.types';
 
+
 export function UnloggedContentSection({
 	activeOption,
 	isSubmitted,

@@ -99,8 +99,9 @@ export default function UnloggedLayout({ children }: LoggedLayoutProps) {
 			setInputErrorMessage('Proszę wprowadzić kod weryfikacyjny');
 			return;
 		}
-		fetchUserData(phoneNumber, Option.Phone, verificationCode)
-			.then(() => router.replace('/'))
+		fetchUserData(phoneNumber, Option.Phone, verificationCode).then(() =>
+			router.replace('/')
+		);
 	}
 
 	return (
