@@ -5,17 +5,16 @@ import MuiCard from '@mui/material/Card'
 import { useState } from 'react'
 import { useRequestApi } from '@/utils/useRequestApi'
 import { useTheme } from '@/context/ThemeProvider'
-import { useRouter } from 'next/navigation'
 import { LoginHeader } from './LoginHeader'
 import { LoginSelectionButtons } from './LoginSelectionButtons'
 import { LoginContentSection } from './LoginContentSection'
 import { LoginFooter } from './LoginFooter'
 import { Option } from './auth.types'
+import { redirectTo } from '@/utils/redirectUrl'
 
 export default function Auth() {
   const { requestApi } = useRequestApi()
   const { toggleTheme } = useTheme()
-  const router = useRouter()
   const [verificationCode, setVerificationCode] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [email, setEmail] = useState<string>('')
@@ -76,13 +75,13 @@ export default function Auth() {
     })
   }
 
-  async function handleCodeSubmit() {
+  async function signIn() {
     if (!verificationCode) {
       setInputError('Proszę wprowadzić kod weryfikacyjny')
       return
     }
     fetchUserData(phoneNumber, Option.Phone, verificationCode).then(() =>
-      router.replace('/')
+      redirectTo('/home', true)
     )
   }
 
@@ -104,7 +103,7 @@ export default function Auth() {
           activeOption={activeOption}
           isSubmitted={isSubmitted}
           verificationCode={verificationCode}
-          handleCodeSubmit={handleCodeSubmit}
+          handleCodeSubmit={signIn}
           handleInputValidation={handleInputValidation}
           inputError={inputError}
           email={email}
