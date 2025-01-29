@@ -27,12 +27,17 @@ declare module '@mui/material/styles' {
 	}
 }
 
+const defaultThemeContext = {
+	isDarkMode: false,
+	toggleTheme: () => {}
+}
+
 interface ThemeContextType {
 	isDarkMode: boolean;
 	toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | null>(null);
+const ThemeContext = createContext<ThemeContextType>(defaultThemeContext);
 
 export const useTheme = () => useContext(ThemeContext);
 
@@ -41,7 +46,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-	const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+	const [isDarkMode, setIsDarkMode] = useState<boolean>(defaultThemeContext.isDarkMode);
 	const [isThemeLoaded, setIsThemeLoaded] = useState<boolean>(false);
 
 	useEffect(() => {

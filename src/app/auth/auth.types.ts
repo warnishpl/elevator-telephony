@@ -1,29 +1,27 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react'
 
 export interface UserInputStateProps {
-	verificationCode: string;
-	setVerificationCode: Dispatch<SetStateAction<string>>;
-	phoneNumber: string;
-	setPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
-	email: string;
-	setEmail: React.Dispatch<React.SetStateAction<string>>;
+  verificationCode: string
+  setVerificationCode: Dispatch<SetStateAction<string>>
+  phoneNumber: string
+  setPhoneNumber: React.Dispatch<React.SetStateAction<string>>
+  email: string
+  setEmail: React.Dispatch<React.SetStateAction<string>>
 }
 
 export enum Option {
-	Email = 'EMAIL',
-	Phone = 'PHONE',
-	None = 'NONE',
+  Email = 'EMAIL',
+  Phone = 'PHONE'
 }
 
 export interface InputErrorStateProps {
-	inputError: boolean;
-	inputErrorMessage: string;
+  inputError: string | null
 }
 
-export interface isSubmittedProp {
-	isSubmitted: boolean;
+export interface IsSubmittedProp {
+  isSubmitted: boolean
 }
-export interface handlersProps {
-	handleCodeSubmit: () => void;
-	handleInputValidation: () => void;
+export interface HandlersProps {
+  handleCodeSubmit: () => void
+  handleInputValidation: () => void
 }
