@@ -1,27 +1,27 @@
-'use client'
+'use client';
 
-import Home from '@/app/page'
-import { redirectTo } from '@/utils/redirectUrl'
-import { useRequestApi } from '@/utils/useRequestApi'
-import { useParams } from 'next/navigation'
-import { useEffect } from 'react'
+import UnloggedLayout from '@/layouts/UnloggedLayout';
+import { redirectTo } from '@/utils/redirectUrl';
+import { useRequestApi } from '@/utils/useRequestApi';
+import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { ApiResponse, AuthProps } from '../auth.types';
 
-export default function Auth() {
-  const { token } = useParams()
-  const { requestApi } = useRequestApi()
 
-  useEffect(() => {
-    if (!token) {
-      return
-    }
-    requestApi({
-      path: `/auth/email/${token}`,
-      method: 'GET',
-      onError: () => redirectTo('/auth')
-    }).then(() => {
-      redirectTo('/home', true)
-    })
-  }, [token])
+export default function Auth({ children }: AuthProps) {
+	const { token } = useParams();
+	const { requestApi } = useRequestApi();
 
-  return <Home></Home>
+	useEffect(() => {
+		requestApi<ApiResponse>({
+			path: `/auth/email/${token}`,
+			method: 'GET',
+		}).then((response) => {
+			if (response && response.status === 200) {
+				redirectTo('/dashboard', true);
+			}
+		});
+	}, [token]);
+
+	return <UnloggedLayout>{children}</UnloggedLayout>;
 }

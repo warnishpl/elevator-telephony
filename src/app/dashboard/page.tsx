@@ -2,11 +2,12 @@
 
 import { Box, Typography } from '@mui/material';
 
-export default function LoadingPage() {
+export default function Dashboard() {
+	
 	return (
 		<Box>
 			<Typography variant='h6' component='h1'>
-				Ładowanie...
+				DASHBOARD DASHBOARD DASHBOARD DASHBOARD DASHBOARD DASHBOARD DASHBOARD
 			</Typography>
 		</Box>
 	);

@@ -20,9 +20,9 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
 		{
 			pathname,
 			isSidebarOpen,
-			path: '/',
+			path: '/dashboard',
 			icon: <HomeOutlined />,
-			label: 'Home',
+			label: 'Dashboard',
 		},
 		{
 			pathname,

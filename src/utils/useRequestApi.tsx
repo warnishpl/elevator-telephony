@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { useAlert } from '@/context/AlertContext';
+import { redirectTo } from './redirectUrl';
 
 interface RequestApiProps {
 	path: string;
@@ -57,6 +58,7 @@ export function useRequestApi() {
 				}
 				if (onError) {
 					onError();
+					redirectTo('/auth')
 				}
 				return error;
 			});

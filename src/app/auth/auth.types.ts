@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 export interface UserInputStateProps {
   verificationCode: string
@@ -24,4 +24,10 @@ export interface IsSubmittedProp {
 export interface HandlersProps {
   handleCodeSubmit: () => void
   handleInputValidation: () => void
+}
+export interface AuthProps {
+  children: ReactNode;
+}
+export interface ApiResponse {
+  status?: number;
 }
