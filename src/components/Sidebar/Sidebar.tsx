@@ -1,5 +1,5 @@
 'use client';
-import { Box, List, useTheme } from '@mui/material';
+import { Box, List } from '@mui/material';
 import {
 	EngineeringOutlined,
 	EscalatorOutlined,
@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import sitemarkLogoIcon from './../../../public/sitemark-logo.svg';
 import { SidebarItem } from '../SidebarItem/SidebarItem';
+import { useTheme } from '@mui/material';
 
 interface SidebarProps {
 	pathname: string;
