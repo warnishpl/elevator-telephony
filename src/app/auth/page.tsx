@@ -10,7 +10,7 @@ import { LoginSelectionButtons } from './LoginSelectionButtons';
 import { LoginContentSection } from './LoginContentSection';
 import { LoginFooter } from './LoginFooter';
 import { Option } from './auth.types';
-import { redirectTo } from '@/utils/redirectUrl';
+import { useRouter } from 'next/navigation';
 
 export default function Auth() {
 	const { requestApi } = useRequestApi();
@@ -21,6 +21,8 @@ export default function Auth() {
 	const [activeOption, setActiveOption] = useState<Option | undefined>();
 	const [inputError, setInputError] = useState<string | null>(null);
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+	const router = useRouter();
+
 
 	function handleOptionClick(option: Option) {
 		setActiveOption(option);
@@ -72,7 +74,7 @@ export default function Auth() {
 			path: '/auth/login',
 			method: 'POST',
 			data,
-		})
+		});
 	}
 
 	async function signIn() {
@@ -81,7 +83,7 @@ export default function Auth() {
 			return;
 		}
 		fetchUserData(phoneNumber, Option.Phone, verificationCode).then(() =>
-			redirectTo('/dashboard', true)
+			router.push('/dashboard')
 		);
 	}
 

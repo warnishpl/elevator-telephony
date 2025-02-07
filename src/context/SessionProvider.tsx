@@ -1,35 +1,40 @@
-import { useSession } from '@/utils/useSession'
-import LoggedLayout from '../layouts/LoggedLayout'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import UnloggedLayout from '@/layouts/UnloggedLayout'
+import LoggedLayout from '@/layouts/LoggedLayout';
+import UnloggedLayout from '@/layouts/UnloggedLayout';
+import { User } from '@/utils/sessionTypes';
+import { useSession } from '@/utils/useSession';
+import React, { createContext, useContext, ReactNode } from 'react';
 
-interface LoggedLayoutProps {
-  children: React.ReactNode
+interface SessionContextType {
+	isAuthenticated: boolean;
+	getUser: () => User | null;
+	loading: boolean;
 }
 
-export default function SessionProvider({ children }: LoggedLayoutProps) {
-  const router = useRouter()
-  const { isLoggedIn, isSessionChecked } = useSession()
-  const [isSessionLoaded, setIsSessionLoaded] = useState(false)
+const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
-  useEffect(() => {
-    if (isSessionChecked) {
-      setIsSessionLoaded(true)
+export const useSessionContext = () => {
+	const context = useContext(SessionContext);
+	if (!context) {
+		throw new Error('useSessionContext must be used within a SessionProvider');
+	}
+	return context;
+};
 
-      if (isLoggedIn === false) {
-        router.replace('/auth')
-      }
-    }
-  }, [isLoggedIn, isSessionChecked, router])
-
-  if (!isSessionLoaded) {
-    return null
-  }
-
-  if (!isLoggedIn) {
-    return <UnloggedLayout>{children}</UnloggedLayout>
-  } else {
-    return <LoggedLayout>{children}</LoggedLayout>
-  }
+interface SessionProviderProps {
+	children: ReactNode;
 }
+
+export const SessionProvider: React.FC<SessionProviderProps> = ({
+	children,
+}) => {
+	const { isAuthenticated, getUser, loading } = useSession();
+	return (
+		<SessionContext.Provider value={{ isAuthenticated, getUser, loading }}>
+			{!isAuthenticated ? (
+				<UnloggedLayout>{children}</UnloggedLayout>
+			) : (
+				<LoggedLayout>{children}</LoggedLayout>
+			)}
+		</SessionContext.Provider>
+	);
+};

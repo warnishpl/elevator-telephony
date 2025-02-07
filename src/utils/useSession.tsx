@@ -1,40 +1,35 @@
-'use client';
+'use client'
+import { useState, useEffect, useCallback } from 'react';
+import { useRequestApi } from './useRequestApi';
+import { User } from './sessionTypes';
 
-import { useEffect, useState } from 'react';
-import { useRequestApi } from './../utils/useRequestApi';
-
-interface SessionState {
-	isLoggedIn: boolean | null;
-	isSessionChecked: boolean;
-	userData?: object;
-}
-interface ApiResponse {
-	status: number;
-}
-
-export const useSession = (): SessionState => {
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-	const [isSessionChecked, setIsSessionChecked] = useState(false); 
-
+export function useSession() {
+	const [session, setSession] = useState<User | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
 	const { requestApi } = useRequestApi();
 
 	useEffect(() => {
-		const handleUserData = (response: ApiResponse) => {
-			if (response?.status === 200) {
-				setIsLoggedIn(true);
-			} else {
-				setIsLoggedIn(false);
+		const fetchSession = async () => {
+			setLoading(true);
+			const { status, data } = await requestApi({
+				path: 'user/who-am-i',
+				method: 'GET',
+			});
+			if (status === 200) {
+				setSession(data as User);
 			}
+			setLoading(false);
+			return data;
 		};
 
-		requestApi<ApiResponse>({
-			path: '/user/who-am-i',
-			method: 'GET',
-		})
-			.then((res) => handleUserData(res))
-			.catch(() => setIsLoggedIn(false))
-			.finally(() => setIsSessionChecked(true));
+		fetchSession();
 	}, []);
 
-	return { isLoggedIn, isSessionChecked };
-};
+	const isAuthenticated = !!session;
+
+	const getUser = useCallback(() => {
+		return session;
+	}, [session]);
+
+	return { isAuthenticated, getUser, loading };
+}

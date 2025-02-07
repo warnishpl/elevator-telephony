@@ -2,15 +2,11 @@
 import { useTheme } from '@/context/ThemeProvider';
 import TopBar from './TopBar';
 import { useEffect, useState } from 'react';
-import { useRequestApi } from '@/utils/useRequestApi';
+import { useSessionContext } from '@/context/SessionProvider';
 
 interface TopBarContainerProps {
 	isSidebarOpen: boolean;
 	toggleSidebar: () => void;
-}
-
-interface ApiResponse {
-	data: { firstName: string; lastName: string };
 }
 
 export default function TopBarContainer({
@@ -18,30 +14,15 @@ export default function TopBarContainer({
 	toggleSidebar,
 }: Readonly<TopBarContainerProps>) {
 	const context = useTheme();
-	const { requestApi } = useRequestApi();
-
+	const { getUser } = useSessionContext();
 	const [fullName, setFullName] = useState<string>('');
-
-	function handleUserData(response: ApiResponse) {
-		if (response) {
-			const { firstName, lastName } = response.data || {};
-			if (firstName && lastName) {
-				setFullName(`${firstName} ${lastName}`);
-			}
-		}
-	}
+	const user = getUser();
 
 	useEffect(() => {
-		requestApi<ApiResponse>({
-			path: '/user/who-am-i',
-			method: 'GET',
-			onError: console.error,
-		}).then((res) => handleUserData(res));
-	}, []);
-
-	if (!context) {
-		return null;
-	}
+		if (user) {
+			setFullName(`${user.firstName} ${user.lastName}`);
+		}
+	}, [user]);
 
 	const { isDarkMode, toggleTheme } = context;
 	const theme = isDarkMode as boolean;

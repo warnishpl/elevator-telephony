@@ -3,8 +3,8 @@
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import { AlertProvider } from '@/context/AlertContext';
-import SessionProvider from '@/context/SessionProvider';
 import { ThemeProvider } from '@/context/ThemeProvider';
+import { SessionProvider } from '@/context/SessionProvider';
 
 const roboto = Roboto({
 	weight: ['400', '700'],

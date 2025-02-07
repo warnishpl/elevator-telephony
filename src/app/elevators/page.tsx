@@ -38,12 +38,12 @@ export default function Elevators() {
 
 	useEffect(() => {
 		async function fetchElevators() {
-			const response = await requestApi<ApiResponse>({
+			const { data } = await requestApi<ApiResponse>({
 				path: '/elevator',
 				method: 'GET',
 			});
 			setElevatorsList(
-				response.data.map((elevator) => ({
+				data.map((elevator) => ({
 					...elevator,
 					id: elevator.uuid,
 					address: elevator.address,
