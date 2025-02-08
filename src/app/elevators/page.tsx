@@ -66,19 +66,19 @@ export default function Elevators() {
   // }
 
   const columns: GridColDef[] = [
-    { field: "address", headerName: "Adres", width: 200, editable: true },
-    { field: "city", headerName: "Miasto", width: 150, editable: true },
+    { field: "address", headerName: "Adres", flex: 3, editable: true },
+    { field: "city", headerName: "Miasto", flex: 2, editable: true },
     {
       field: "phoneNumber",
       headerName: "Numer telefonu",
-      width: 150,
+      flex: 2,
       editable: true,
     },
-    { field: "region", headerName: "Region", width: 150 },
+    { field: "region", headerName: "Region", flex: 2 },
     {
       field: "status",
       headerName: "Status",
-      width: 100,
+      flex: 1,
       renderCell: (params) => (
         <StatusIcon status={params.row.status}></StatusIcon>
       ),
@@ -94,7 +94,7 @@ export default function Elevators() {
       filterable: false,
       sortable: false,
       resizable: false,
-      width: 110,
+      flex: 1,
       disableColumnMenu: true,
     },
   ];
