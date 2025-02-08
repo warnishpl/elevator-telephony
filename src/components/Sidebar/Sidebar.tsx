@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import sitemarkLogoIcon from './../../../public/sitemark-logo.svg';
-import { SidebarItem } from '../SidebarItem/SidebarItem';
+import { SidebarItem } from '../SidebarItem';
 
 interface SidebarProps {
 	pathname: string;
