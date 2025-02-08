@@ -1,4 +1,4 @@
-import { useRequestApi } from '@/utils/useRequestApi';
+import { useRequestApi } from '@/hooks/useRequestApi';
 import { CheckOutlined, InfoOutlined, SaveOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Fab, useTheme } from '@mui/material';
 import { green } from '@mui/material/colors';
@@ -52,15 +52,15 @@ export function ElevatorsActions({
 		if (result.status === 200) {
 			setSuccess(true);
 			setRowId(null);
-		} 
+		}
 		setLoading(false);
 	};
 
 	useEffect(() => {
 		if (params.id === rowId) {
-		  setSuccess(false);
+			setSuccess(false);
 		}
-	  }, [params.id, rowId]);
+	}, [params.id, rowId]);
 
 	return (
 		<Box

@@ -3,7 +3,7 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { useState } from 'react';
-import { useRequestApi } from '@/utils/useRequestApi';
+import { useRequestApi } from '@/hooks/useRequestApi';
 import { useTheme } from '@/context/ThemeProvider';
 import { LoginHeader } from './LoginHeader';
 import { LoginSelectionButtons } from './LoginSelectionButtons';
@@ -22,7 +22,6 @@ export default function Auth() {
 	const [inputError, setInputError] = useState<string | null>(null);
 	const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 	const router = useRouter();
-
 
 	function handleOptionClick(option: Option) {
 		setActiveOption(option);

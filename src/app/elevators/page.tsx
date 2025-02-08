@@ -1,6 +1,6 @@
 'use client';
 
-import { useRequestApi } from '@/utils/useRequestApi';
+import { useRequestApi } from '@/hooks/useRequestApi';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { DataGrid, gridClasses, GridColDef } from '@mui/x-data-grid';
@@ -69,42 +69,40 @@ export default function Elevators() {
 	// 	});
 	// }
 
-	const columns: GridColDef[] = useMemo(
-		() => [
-			{ field: 'address', headerName: 'Adres', width: 200, editable: true },
-			{ field: 'city', headerName: 'Miasto', width: 150, editable: true },
-			{
-				field: 'phoneNumber',
-				headerName: 'Numer telefonu',
-				width: 150,
-				editable: true,
-			},
-			{ field: 'region', headerName: 'Region', width: 150 },
-			{
-				field: 'status',
-				headerName: 'Status',
-				width: 100,
-				renderCell: (params) => (
-					<StatusIcon status={params.row.status}></StatusIcon>
-				),
-			},
-			{
-				field: 'actions',
-				headerName: 'Akcje',
-				type: 'actions',
-				renderCell: (params) => (
-					<ElevatorsActions {...{ params, rowId, setRowId }} />
-				),
-				editable: false,
-				filterable: false,
-				sortable: false,
-				resizable: false,
-				width: 110,
-				disableColumnMenu: true,
-			},
-		],
-		[rowId]
-	);
+	const columns: GridColDef[] = [
+		{ field: 'address', headerName: 'Adres', width: 200, editable: true },
+		{ field: 'city', headerName: 'Miasto', width: 150, editable: true },
+		{
+			field: 'phoneNumber',
+			headerName: 'Numer telefonu',
+			width: 150,
+			editable: true,
+		},
+		{ field: 'region', headerName: 'Region', width: 150 },
+		{
+			field: 'status',
+			headerName: 'Status',
+			width: 100,
+			renderCell: (params) => (
+				<StatusIcon status={params.row.status}></StatusIcon>
+			),
+		},
+		{
+			field: 'actions',
+			headerName: 'Akcje',
+			type: 'actions',
+			renderCell: (params) => (
+				<ElevatorsActions {...{ params, rowId, setRowId }} />
+			),
+			editable: false,
+			filterable: false,
+			sortable: false,
+			resizable: false,
+			width: 110,
+			disableColumnMenu: true,
+		},
+	];
+
 	return (
 		<Box sx={{ height: 700, width: '100%' }}>
 			<Typography variant='h6' component='h1' sx={{ textAlign: 'center' }}>

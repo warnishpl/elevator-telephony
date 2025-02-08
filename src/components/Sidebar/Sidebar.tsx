@@ -7,9 +7,9 @@ import {
 	InfoOutlined,
 } from '@mui/icons-material';
 import Image from 'next/image';
-import sitemarkLogoIcon from './../../../public/sitemark-logo.svg';
-import { SidebarItem } from '../SidebarItem/SidebarItem';
+import sitemarkLogoIcon from 'public/sitemark-logo.svg';
 import { useTheme } from '@mui/material';
+import { SidebarItem } from '../SideBarItem/SidebarItem';
 
 interface SidebarProps {
 	pathname: string;
@@ -37,14 +37,14 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
 			isSidebarOpen,
 			path: '/elevators',
 			icon: <EscalatorOutlined />,
-			label: 'Windy',
+			label: 'Elevators',
 		},
 		{
 			pathname,
 			isSidebarOpen,
 			path: '/employees',
 			icon: <EngineeringOutlined />,
-			label: 'Pracownicy',
+			label: 'Employees',
 		},
 	];
 	return (

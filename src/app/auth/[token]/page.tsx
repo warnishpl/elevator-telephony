@@ -1,13 +1,11 @@
 'use client';
 
-import UnloggedLayout from '@/layouts/UnloggedLayout';
-import { redirectTo } from '@/utils/redirectUrl';
-import { useRequestApi } from '@/utils/useRequestApi';
+import { useRequestApi } from '@/hooks/useRequestApi';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { ApiResponse, AuthProps } from '../auth.types';
+import { ApiResponse } from '../auth.types';
 
-export default function Auth({ children }: AuthProps) {
+export default function Auth() {
 	const { token } = useParams();
 	const { requestApi } = useRequestApi();
 	const router = useRouter();
@@ -16,14 +14,10 @@ export default function Auth({ children }: AuthProps) {
 		requestApi<ApiResponse>({
 			path: `/auth/email/${token}`,
 			method: 'GET',
-		}).then((response) => {
-			if (response.status === 200) {
-				redirectTo('/dashboard', true);
-			} else {
-				router.push('/auth');
-			}
+		}).then(() => {
+			router.push('/dashboard');
 		});
 	}, [token]);
 
-	return <UnloggedLayout>{children}</UnloggedLayout>;
+	return null;
 }
