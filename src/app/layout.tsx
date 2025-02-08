@@ -1,18 +1,16 @@
 'use client';
-import { Geist, Geist_Mono } from 'next/font/google';
+
+import { Roboto } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/context/ThemeProvider';
 import { AlertProvider } from '@/context/AlertContext';
-import LoggedLayout from '@/components/layout/LoggedLayout';
+import SessionProvider from '@/context/SessionProvider';
+import { ThemeProvider } from '@/context/ThemeProvider';
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
+const roboto = Roboto({
+	weight: ['400', '700'],
+	style: ['normal', 'italic'],
 	subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+	display: 'swap',
 });
 
 export default function RootLayout({
@@ -21,16 +19,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<ThemeProvider>
-			<html lang='en'>
-				<body
-					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-				>
+		<html lang='en'>
+			<body className={roboto.className}>
+				<ThemeProvider>
 					<AlertProvider>
-						<LoggedLayout>{children}</LoggedLayout>
+						<SessionProvider>{children}</SessionProvider>
 					</AlertProvider>
-				</body>
-			</html>
-		</ThemeProvider>
+				</ThemeProvider>
+			</body>
+		</html>
 	);
 }

@@ -2,11 +2,11 @@
 
 import { Box, Typography } from '@mui/material';
 
-export default function Home() {
+export default function Elevators() {
 	return (
 		<Box>
 			<Typography variant='h6' component='h1'>
-				HOME HOME HOME HOME HOME HOME HOME HOME HOME
+				EMPLOYEES EMPLOYEES EMPLOYEES EMPLOYEES EMPLOYEES
 			</Typography>
 		</Box>
 	);

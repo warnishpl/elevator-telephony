@@ -6,6 +6,7 @@ interface RequestApiProps {
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE';
 	data?: object;
 	params?: object;
+	headers?: object;
 	onError?: () => void;
 	showErrorAlert?: boolean;
 	showSuccessAlert?: boolean;
@@ -19,6 +20,7 @@ export function useRequestApi() {
 		data,
 		params,
 		onError,
+		headers,
 		showSuccessAlert = false,
 		showErrorAlert = true,
 	}: RequestApiProps): Promise<T> {
@@ -26,9 +28,11 @@ export function useRequestApi() {
 			method,
 			url: path,
 			data,
-			baseURL: 'https://api.sampleapis.com/beers',
+			baseURL: 'http://eletele.tplinkdns.com/api',
 			params: params,
 			timeout: 5000,
+			withCredentials: true,
+			headers,
 		};
 
 		return axios(config)
@@ -36,10 +40,9 @@ export function useRequestApi() {
 				showSuccessAlert = true;
 				showErrorAlert = false;
 				if (showSuccessAlert) {
-					showAlert('Operacja zakończona sukcesem', 'success');
+					showAlert('API SUCCESS', 'success');
 				}
-
-				return response.data;
+				return response;
 			})
 			.catch((error) => {
 				if (axios.isAxiosError(error)) {
