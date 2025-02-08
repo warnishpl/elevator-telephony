@@ -1,15 +1,9 @@
 'use client';
-import Divider from '@mui/material/Divider';
-import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
 import { useState } from 'react';
 import { useRequestApi } from '@/hooks/useRequestApi';
 import { useTheme } from '@/context/ThemeProvider';
-import { LoginHeader } from './LoginHeader';
-import { LoginSelectionButtons } from './LoginSelectionButtons';
-import { LoginContentSection } from './LoginContentSection';
-import { LoginFooter } from './LoginFooter';
 import { Option } from './auth.types';
+import { AuthPanel } from './AuthPanel';
 import { useRouter } from 'next/navigation';
 
 export default function Auth() {
@@ -87,34 +81,20 @@ export default function Auth() {
 	}
 
 	return (
-		<Stack className='h-dvh p-2'>
-			<MuiCard
-				variant='outlined'
-				className={`flex flex-col self-center w-full px-4 py-10 gap-2 m-auto max-w-[450px] 
-                    shadow-[0px_5px_15px_0px_hsla(220,30%,5%,0.5),0px_15px_35px_-5px_hsla(220,25%,10%,0.08)]`}
-			>
-				<LoginHeader toggleTheme={toggleTheme} />
-				<h1>Zaloguj się</h1>
-				<LoginSelectionButtons
-					activeOption={activeOption}
-					handleOptionClick={handleOptionClick}
-				/>
-				<Divider />
-				<LoginContentSection
-					activeOption={activeOption}
-					isSubmitted={isSubmitted}
-					verificationCode={verificationCode}
-					handleCodeSubmit={signIn}
-					handleInputValidation={handleInputValidation}
-					inputError={inputError}
-					email={email}
-					setEmail={setEmail}
-					phoneNumber={phoneNumber}
-					setPhoneNumber={setPhoneNumber}
-					setVerificationCode={setVerificationCode}
-				/>
-				<LoginFooter />
-			</MuiCard>
-		</Stack>
+		<AuthPanel
+			toggleTheme={toggleTheme}
+			activeOption={activeOption}
+			isSubmitted={isSubmitted}
+			verificationCode={verificationCode}
+			handleCodeSubmit={signIn}
+			handleInputValidation={handleInputValidation}
+			inputError={inputError}
+			email={email}
+			setEmail={setEmail}
+			phoneNumber={phoneNumber}
+			setPhoneNumber={setPhoneNumber}
+			setVerificationCode={setVerificationCode}
+			handleOptionClick={handleOptionClick}
+		/>
 	);
 }
