@@ -7,7 +7,7 @@ import {
   InfoOutlined,
 } from "@mui/icons-material";
 import Image from "next/image";
-import sitemarkLogoIcon from "./../../../public/sitemark-logo.svg";
+import sitemarkLogoIcon from "public/sitemark-logo.svg";
 import { SidebarItem } from "../SidebarItem";
 
 interface SidebarProps {
@@ -35,7 +35,7 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
       pathname,
       isSidebarOpen,
       path: "/elevators",
-      icon: <EscalatorOutlined />,
+      icon: <EscalatorOutlined/>,
       label: "Elevators",
     },
     {

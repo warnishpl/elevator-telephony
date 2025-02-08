@@ -31,6 +31,7 @@ export function AuthPhone({
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setVerificationCode(e.target.value)
         }
+        onKeyDown={(e) => e.key === "Enter" && handleCodeSubmit()}
       />
       <Button
         type="button"

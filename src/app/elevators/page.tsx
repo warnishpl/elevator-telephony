@@ -16,6 +16,7 @@ type ElevatorList = Array<{
   phoneNumber: string;
   region: string;
   status: string;
+  updatedAt: string;
 }>;
 
 interface Elevator {
@@ -25,6 +26,17 @@ interface Elevator {
   phoneNumber: string;
   region: string;
   status: string;
+  updatedAt: string;
+}
+
+function updateAtParser(stringDate: string) {
+	const date = new Date(stringDate);
+	const lastUpdateMinutes = Math.floor(
+		(new Date().getTime() - date.getTime()) / (60 * 1000)
+	);
+	return lastUpdateMinutes < 60
+		? `${lastUpdateMinutes} min temu`
+		: date.toLocaleString();
 }
 
 export default function Elevators() {
@@ -42,28 +54,14 @@ export default function Elevators() {
         data.map((elevator) => ({
           ...elevator,
           id: elevator.uuid,
-          address: elevator.address,
-          city: elevator.city,
-          phoneNumber: elevator.phoneNumber,
-          region: elevator.region,
-          status: elevator.status,
+          updatedAt: updateAtParser(elevator.updatedAt),
         }))
       );
     }
     fetchElevators();
   }, []);
 
-  // function createNewElevator() {
-  // 	requestApi({
-  // 		path: '/elevator',
-  // 		method: 'POST',
-  // 		data: {
-  // 			address: '',
-  // 			city: '',
-  // 			phoneNumber: '',
-  // 		},
-  // 	});
-  // }
+
 
   const columns: GridColDef[] = [
     { field: "address", headerName: "Adres", flex: 3, editable: true },
@@ -83,6 +81,7 @@ export default function Elevators() {
         <StatusIcon status={params.row.status}></StatusIcon>
       ),
     },
+    { field: "updatedAt", headerName: "Zaaktualizowano", flex: 2 },
     {
       field: "actions",
       headerName: "Akcje",

@@ -28,6 +28,7 @@ export function AuthInitial({
         variant="outlined"
         value={field.value}
         onChange={(e) => field.setValue(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleInputValidation()}
       />
       <Button
         type="button"
