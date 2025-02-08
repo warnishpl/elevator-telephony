@@ -5,9 +5,6 @@ import { green } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 import { GridRenderCellParams } from '@mui/x-data-grid';
 
-interface ApiResponse {
-	status: number;
-}
 
 interface ElevatorRow {
 	id: string;
@@ -35,8 +32,8 @@ export function ElevatorsActions({
 	async function updateElevatorData(
 		data: { address: string; city: string; phoneNumber: string },
 		id: string
-	): Promise<ApiResponse> {
-		const result = await requestApi<ApiResponse>({
+	) {
+		const result = await requestApi({
 			path: `/elevator/${id}`,
 			method: 'PUT',
 			data,

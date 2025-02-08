@@ -9,7 +9,7 @@ type LoginHeader = {
 }
 
 export function LoginHeader({ toggleTheme }: Readonly<LoginHeader>) {
-  const { isDarkMode } = useTheme()
+  const { isDarkMode } = useTheme();
 
   return (
     <Box

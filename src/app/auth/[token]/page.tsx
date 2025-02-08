@@ -3,7 +3,7 @@
 import { useRequestApi } from '@/hooks/useRequestApi';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { ApiResponse } from '../auth.types';
+
 
 export default function Auth() {
 	const { token } = useParams();
@@ -11,13 +11,13 @@ export default function Auth() {
 	const router = useRouter();
 
 	useEffect(() => {
-		requestApi<ApiResponse>({
+		requestApi({
 			path: `/auth/email/${token}`,
 			method: 'GET',
 		}).then(() => {
 			router.push('/dashboard');
 		});
-	}, [token]);
+	}, []);
 
 	return null;
 }

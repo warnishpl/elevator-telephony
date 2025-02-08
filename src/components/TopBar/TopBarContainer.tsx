@@ -9,8 +9,9 @@ interface TopBarContainerProps {
 	toggleSidebar: () => void;
 }
 
-interface ApiResponse {
-	data: { firstName: string; lastName: string };
+interface WhoAmIResponse {
+	firstName: string;
+	lastName: string;
 }
 
 export default function TopBarContainer({
@@ -22,21 +23,19 @@ export default function TopBarContainer({
 
 	const [fullName, setFullName] = useState<string>('');
 
-	function handleUserData(response: ApiResponse) {
-		if (response) {
-			const { firstName, lastName } = response.data || {};
-			if (firstName && lastName) {
-				setFullName(`${firstName} ${lastName}`);
-			}
+	function handleUserData(data: WhoAmIResponse) {
+		const { firstName, lastName } = data;
+		if (firstName && lastName) {
+			setFullName(`${firstName} ${lastName}`);
 		}
 	}
 
 	useEffect(() => {
-		requestApi<ApiResponse>({
+		requestApi<WhoAmIResponse>({
 			path: '/user/who-am-i',
 			method: 'GET',
 			onError: console.error,
-		}).then((res) => handleUserData(res));
+		}).then((res) => handleUserData(res.data));
 	}, []);
 
 	const { isDarkMode, toggleTheme } = context;

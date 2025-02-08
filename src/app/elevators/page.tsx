@@ -2,15 +2,14 @@
 
 import { useRequestApi } from '@/hooks/useRequestApi';
 import { Box, Typography } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid, gridClasses, GridColDef } from '@mui/x-data-grid';
 import { StatusIcon } from './StatusIcon';
 import { plPL } from '@mui/x-data-grid/locales';
 import { useTheme } from '@mui/material';
 import { ElevatorsActions } from './ElevatorsActions';
 
-interface ApiResponse {
-	data: Array<{
+type ElevatorList = Array<{
 		number: number;
 		uuid: string;
 		address: string;
@@ -19,7 +18,6 @@ interface ApiResponse {
 		region: string;
 		status: string;
 	}>;
-}
 
 interface Elevator {
 	id: string;
@@ -38,7 +36,7 @@ export default function Elevators() {
 
 	useEffect(() => {
 		async function fetchElevators() {
-			const { data } = await requestApi<ApiResponse>({
+			const { data } = await requestApi<ElevatorList>({
 				path: '/elevator',
 				method: 'GET',
 			});
