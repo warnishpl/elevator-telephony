@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 export default function NotFoundPage() {
-	return (
-		<>
-			<h1>Not Found... 404</h1>
-		</>
-	);
+  return (
+    <>
+      <h1>Not Found... 404</h1>
+    </>
+  );
 }

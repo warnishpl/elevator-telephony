@@ -1,51 +1,51 @@
-'use client'
-import { Box, List, useTheme } from '@mui/material'
+"use client";
+import { Box, List, useTheme } from "@mui/material";
 import {
   EngineeringOutlined,
   EscalatorOutlined,
   HomeOutlined,
-  InfoOutlined
-} from '@mui/icons-material'
-import Image from 'next/image'
-import sitemarkLogoIcon from './../../../public/sitemark-logo.svg'
-import { SidebarItem } from '../SidebarItem'
+  InfoOutlined,
+} from "@mui/icons-material";
+import Image from "next/image";
+import sitemarkLogoIcon from "./../../../public/sitemark-logo.svg";
+import { SidebarItem } from "../SidebarItem";
 
 interface SidebarProps {
-  pathname: string
-  isSidebarOpen: boolean
+  pathname: string;
+  isSidebarOpen: boolean;
 }
 export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
-  const theme = useTheme()
+  const theme = useTheme();
   const sidebarItemsArray = [
     {
       pathname,
       isSidebarOpen,
-      path: '/dashboard',
+      path: "/dashboard",
       icon: <HomeOutlined />,
-      label: 'Dashboard'
+      label: "Dashboard",
     },
     {
       pathname,
       isSidebarOpen,
-      path: '/about',
+      path: "/about",
       icon: <InfoOutlined />,
-      label: 'About'
+      label: "About",
     },
     {
       pathname,
       isSidebarOpen,
-      path: '/elevators',
+      path: "/elevators",
       icon: <EscalatorOutlined />,
-      label: 'Elevators'
+      label: "Elevators",
     },
     {
       pathname,
       isSidebarOpen,
-      path: '/employees',
+      path: "/employees",
       icon: <EngineeringOutlined />,
-      label: 'Employees'
-    }
-  ]
+      label: "Employees",
+    },
+  ];
   return (
     <Box
       position="fixed"
@@ -53,15 +53,15 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
       top="0"
       height="100vh"
       sx={{
-        width: isSidebarOpen ? '16rem' : '4rem',
-        transition: 'all 0.3s ease-in-out',
-        background: theme.palette.menuBackground?.main
+        width: isSidebarOpen ? "16rem" : "4rem",
+        transition: "all 0.3s ease-in-out",
+        background: theme.palette.menuBackground?.main,
       }}
     >
       <Image
         src={sitemarkLogoIcon}
         alt="logo"
-        style={{ height: '4rem', padding: '10px' }}
+        style={{ height: "4rem", padding: "10px" }}
       ></Image>
       <List disablePadding>
         {sidebarItemsArray.map((item, index) => (
@@ -78,5 +78,5 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
         ))}
       </List>
     </Box>
-  )
+  );
 }

@@ -1,9 +1,9 @@
 interface LoggedLayoutProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function UnloggedLayout({
-	children,
+  children,
 }: Readonly<LoggedLayoutProps>) {
-	return <>{children}</>;
+  return <>{children}</>;
 }

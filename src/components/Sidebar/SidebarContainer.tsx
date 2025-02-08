@@ -1,13 +1,13 @@
-'use client';
-import { usePathname } from 'next/navigation';
-import Sidebar from '@/components/Sidebar/Sidebar';
+"use client";
+import { usePathname } from "next/navigation";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 interface SidebarContainer {
-	isSidebarOpen: boolean;
+  isSidebarOpen: boolean;
 }
 
 export default function SidebarContainer({ isSidebarOpen }: SidebarContainer) {
-	const pathname = usePathname();
+  const pathname = usePathname();
 
-	return <Sidebar pathname={pathname} isSidebarOpen={isSidebarOpen}></Sidebar>;
+  return <Sidebar pathname={pathname} isSidebarOpen={isSidebarOpen}></Sidebar>;
 }
