@@ -18,7 +18,7 @@ interface ElevatorsActionsProps {
   setRowId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export function ElevatorsActions({
+export function ActionButtons({
   params,
   rowId,
   setRowId,
@@ -110,6 +110,7 @@ export function ElevatorsActions({
           sx={{
             width: 40,
             height: 40,
+            color: theme.palette.textReverse?.primary,
             bgcolor: theme.palette.primary.main,
             "&:hover": { bgcolor: green[700] },
           }}

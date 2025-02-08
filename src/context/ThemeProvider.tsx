@@ -15,6 +15,9 @@ declare module "@mui/material/styles" {
     primaryHover?: {
       main: string;
     };
+    textReverse?: {
+      primary: string;
+    };
   }
 
   interface PaletteOptions {
@@ -23,6 +26,9 @@ declare module "@mui/material/styles" {
     };
     primaryHover?: {
       main: string;
+    };
+    textReverse?: {
+      primary: string;
     };
   }
 }
@@ -74,6 +80,25 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }
 
   const theme = createTheme({
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          "*::-webkit-scrollbar": {
+            width: "10px",
+          },
+          "*::-webkit-scrollbar-track": {
+            backgroundColor: isDarkMode ? "#2c3441" : "#bdbdbe",
+          },
+          "*::-webkit-scrollbar-thumb": {
+            backgroundColor: isDarkMode ? "#84cc16" : "#1976d2",
+            borderRadius: "10px",
+          },
+          "*::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: isDarkMode ? "#66b512" : "#1565C0",
+          },
+        },
+      },
+    },
     palette: {
       mode: isDarkMode ? "dark" : "light",
       primary: {
@@ -90,6 +115,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       },
       text: {
         primary: isDarkMode ? "#ffffff" : "#000000",
+      },
+      textReverse: {
+        primary: isDarkMode ? "#000000" : "#ffffff",
       },
     },
     typography: {

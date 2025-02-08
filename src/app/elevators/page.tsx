@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { StatusIcon } from "./StatusIcon";
 import { plPL } from "@mui/x-data-grid/locales";
-import { ElevatorsActions } from "./ElevatorsActions";
+import { ActionButtons } from "./ActionButtons";
+import { CustomLoadingOverlay } from "@/components/common/Loader/Loader";
 
 type ElevatorList = Array<{
   number: number;
@@ -30,19 +31,20 @@ interface Elevator {
 }
 
 function updateAtParser(stringDate: string) {
-	const date = new Date(stringDate);
-	const lastUpdateMinutes = Math.floor(
-		(new Date().getTime() - date.getTime()) / (60 * 1000)
-	);
-	return lastUpdateMinutes < 60
-		? `${lastUpdateMinutes} min temu`
-		: date.toLocaleString();
+  const date = new Date(stringDate);
+  const lastUpdateMinutes = Math.floor(
+    (new Date().getTime() - date.getTime()) / (60 * 1000)
+  );
+  return lastUpdateMinutes < 60
+    ? `${lastUpdateMinutes} min temu`
+    : date.toLocaleString();
 }
 
 export default function Elevators() {
   const [elevatorsList, setElevatorsList] = useState<Elevator[]>([]);
   const theme = useTheme();
   const [rowId, setRowId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchElevators() {
@@ -57,11 +59,10 @@ export default function Elevators() {
           updatedAt: updateAtParser(elevator.updatedAt),
         }))
       );
+      setIsLoading(false);
     }
     fetchElevators();
   }, []);
-
-
 
   const columns: GridColDef[] = [
     { field: "address", headerName: "Adres", flex: 3, editable: true },
@@ -72,11 +73,13 @@ export default function Elevators() {
       flex: 2,
       editable: true,
     },
-    { field: "region", headerName: "Region", flex: 2 },
+    { field: "region", headerName: "Region", flex: 2, editable: false },
     {
       field: "status",
       headerName: "Status",
       flex: 1,
+      editable: false,
+      filterable: false,
       renderCell: (params) => (
         <StatusIcon status={params.row.status}></StatusIcon>
       ),
@@ -87,7 +90,7 @@ export default function Elevators() {
       headerName: "Akcje",
       type: "actions",
       renderCell: (params) => (
-        <ElevatorsActions {...{ params, rowId, setRowId }} />
+        <ActionButtons {...{ params, rowId, setRowId }} />
       ),
       editable: false,
       filterable: false,
@@ -95,6 +98,7 @@ export default function Elevators() {
       resizable: false,
       flex: 1,
       disableColumnMenu: true,
+      hideable: false,
     },
   ];
 
@@ -114,12 +118,12 @@ export default function Elevators() {
         rows={elevatorsList}
         getRowId={(row) => row.uuid}
         columns={columns}
-        slotProps={{
-          loadingOverlay: {
-            variant: "linear-progress",
-            noRowsVariant: "linear-progress",
-          },
+        disableColumnSelector
+        slots={{
+          loadingOverlay: CustomLoadingOverlay,
         }}
+        scrollbarSize={10}
+        loading={isLoading}
         getRowSpacing={(params) => ({
           top: params.isFirstVisible ? 0 : 5,
           bottom: params.isLastVisible ? 0 : 5,
