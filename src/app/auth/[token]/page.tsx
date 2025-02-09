@@ -1,27 +1,21 @@
-'use client'
+"use client";
 
-import Home from '@/app/page'
-import { redirectTo } from '@/utils/redirectUrl'
-import { useRequestApi } from '@/utils/useRequestApi'
-import { useParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { requestApi } from "@/utils/requestApi";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Auth() {
-  const { token } = useParams()
-  const { requestApi } = useRequestApi()
+  const { token } = useParams();
+  const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
-      return
-    }
     requestApi({
       path: `/auth/email/${token}`,
-      method: 'GET',
-      onError: () => redirectTo('/auth')
+      method: "GET",
     }).then(() => {
-      redirectTo('/home', true)
-    })
-  }, [token])
+      router.push("/dashboard");
+    });
+  }, []);
 
-  return <Home></Home>
+  return null;
 }
