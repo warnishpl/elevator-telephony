@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 
-export default function Elevators() {
+export default function Employees() {
   return (
     <Box>
       <Typography variant="h6" component="h1">

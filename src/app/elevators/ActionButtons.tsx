@@ -1,12 +1,17 @@
+"use client";
 import { requestApi } from "@/utils/requestApi";
-import { CheckOutlined, InfoOutlined, SaveOutlined } from "@mui/icons-material";
+import {
+  CheckOutlined,
+  PreviewOutlined,
+  SaveOutlined,
+} from "@mui/icons-material";
 import { Box, CircularProgress, Fab, useTheme } from "@mui/material";
 import { green } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { GridRenderCellParams } from "@mui/x-data-grid";
 
 interface ElevatorRow {
-  id: string;
+  uuid: string;
   address: string;
   city: string;
   phoneNumber: string;
@@ -27,6 +32,7 @@ export function ActionButtons({
   const [success, setSuccess] = useState(false);
   const theme = useTheme();
 
+
   async function updateElevatorData(
     data: { address: string; city: string; phoneNumber: string },
     id: string
@@ -41,10 +47,14 @@ export function ActionButtons({
 
   const handleSubmit = async () => {
     setLoading(true);
-    const { address, city, phoneNumber, id } = params.row as ElevatorRow;
-    const result = await updateElevatorData({ address, city, phoneNumber }, id);
+    const { address, city, phoneNumber, uuid } = params.row as ElevatorRow;
+    const result = await updateElevatorData(
+      { address, city, phoneNumber },
+      uuid
+    );
 
     if (result.status === 200) {
+      console.log(result)
       setSuccess(true);
       setRowId(null);
     }
@@ -112,10 +122,10 @@ export function ActionButtons({
             height: 40,
             color: theme.palette.textReverse?.primary,
             bgcolor: theme.palette.primary.main,
-            "&:hover": { bgcolor: green[700] },
+            "&:hover": { bgcolor: theme.palette.primaryHover?.main },
           }}
         >
-          <InfoOutlined />
+          <PreviewOutlined />
         </Fab>
       </Box>
     </Box>

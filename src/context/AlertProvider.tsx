@@ -84,6 +84,6 @@ export const enqueueAlert = (
   if (showAlert) {
     showAlert(message, severity, autoHideDuration);
   } else {
-    console.log("AlertProvider not initialized");
+    console.error("AlertProvider not initialized");
   }
 };

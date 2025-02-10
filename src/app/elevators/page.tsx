@@ -8,27 +8,7 @@ import { StatusIcon } from "./StatusIcon";
 import { plPL } from "@mui/x-data-grid/locales";
 import { ActionButtons } from "./ActionButtons";
 import { CustomLoadingOverlay } from "@/components/common/Loader/Loader";
-
-type ElevatorList = Array<{
-  number: number;
-  uuid: string;
-  address: string;
-  city: string;
-  phoneNumber: string;
-  region: string;
-  status: string;
-  updatedAt: string;
-}>;
-
-interface Elevator {
-  id: string;
-  address: string;
-  city: string;
-  phoneNumber: string;
-  region: string;
-  status: string;
-  updatedAt: string;
-}
+import { Elevator, ElevatorList } from "./elevators.types";
 
 function updateAtParser(stringDate: string) {
   const date = new Date(stringDate);
@@ -55,7 +35,6 @@ export default function Elevators() {
       setElevatorsList(
         data.map((elevator) => ({
           ...elevator,
-          id: elevator.uuid,
           updatedAt: updateAtParser(elevator.updatedAt),
         }))
       );
@@ -90,7 +69,13 @@ export default function Elevators() {
       headerName: "Akcje",
       type: "actions",
       renderCell: (params) => (
-        <ActionButtons {...{ params, rowId, setRowId }} />
+        <ActionButtons
+          {...{
+            params,
+            rowId,
+            setRowId,
+          }}
+        />
       ),
       editable: false,
       filterable: false,
@@ -103,38 +88,42 @@ export default function Elevators() {
   ];
 
   return (
-    <Box sx={{ height: 700, width: "100%" }}>
-      <Typography variant="h6" component="h1" sx={{ textAlign: "center" }}>
-        Lista wind
-      </Typography>
-      <DataGrid
-        localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
-        pageSizeOptions={[
-          10,
-          100,
-          { value: 1000, label: "1,000" },
-          { value: -1, label: "Wszystkie" },
-        ]}
-        rows={elevatorsList}
-        getRowId={(row) => row.uuid}
-        columns={columns}
-        disableColumnSelector
-        slots={{
-          loadingOverlay: CustomLoadingOverlay,
-        }}
-        scrollbarSize={10}
-        loading={isLoading}
-        getRowSpacing={(params) => ({
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5,
-        })}
-        sx={{
-          [`& .${gridClasses.row}`]: {
-            bgcolor: theme.palette.menuBackground?.main,
-          },
-        }}
-        onCellEditStop={(params) => setRowId(params.id as number)}
-      />
-    </Box>
+    <>
+      <Box sx={{ height: 700, width: "100%" }}>
+        <Typography variant="h6" component="h1" sx={{ textAlign: "center" }}>
+          Lista wind
+        </Typography>
+        <DataGrid
+          localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
+          pageSizeOptions={[
+            10,
+            100,
+            { value: 1000, label: "1,000" },
+            { value: -1, label: "Wszystkie" },
+          ]}
+          rows={elevatorsList}
+          getRowId={(row) => row.uuid}
+          columns={columns}
+          disableColumnSelector
+          slots={{
+            loadingOverlay: CustomLoadingOverlay,
+          }}
+          scrollbarSize={10}
+          loading={isLoading}
+          getRowSpacing={(params) => ({
+            top: params.isFirstVisible ? 0 : 5,
+            bottom: params.isLastVisible ? 0 : 5,
+          })}
+          sx={{
+            [`& .${gridClasses.row}`]: {
+              bgcolor: theme.palette.menuBackground?.main,
+            },
+          }}
+          onCellEditStop={(params) => {
+            setRowId(params.id as number);
+          }}
+        />
+      </Box>
+    </>
   );
 }
