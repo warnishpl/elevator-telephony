@@ -30,22 +30,20 @@ export default function Elevators() {
   const searchParams = useSearchParams();
   const queryId = searchParams.get("id");
   const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedElevatorData(null);
-    router.push(`/elevators`);
-  };
   const [selectedElevatorData, setSelectedElevatorData] =
     useState<Elevator | null>();
 
-  async function fetchElevator(id?: string) {
+  const handleCloseModal = () => {
+    setSelectedElevatorData(null);
+    router.push(`/elevators`);
+  };
+
+  async function fetchElevator() {
     const { data: elevatorData } = await requestApi<Elevator>({
-      path: `/elevator/${queryId ? queryId : id}`,
+      path: `/elevator/${queryId}`,
       method: "GET",
     });
-    if (elevatorData && elevatorData.updatedAt) {
+    if (elevatorData?.updatedAt) {
       elevatorData.updatedAt = updateAtParser(elevatorData.updatedAt);
     }
     setSelectedElevatorData(elevatorData);
@@ -54,9 +52,8 @@ export default function Elevators() {
   useEffect(() => {
     if (queryId) {
       fetchElevator();
-      handleOpenModal();
     }
-  }, []);
+  }, [queryId]);
 
   useEffect(() => {
     async function fetchElevators() {
@@ -74,6 +71,22 @@ export default function Elevators() {
     }
     fetchElevators();
   }, []);
+
+  // useEffect(() => {
+  //   requestApi<ElevatorList>({
+  //     path: "/elevator",
+  //     method: "GET",
+  //   }).then((res) => {
+  //     setElevatorsList(
+  //       res.data.map((elevator) => ({
+  //         ...elevator,
+  //         updatedAt: updateAtParser(elevator.updatedAt),
+  //       }))
+  //     );
+  //     setIsLoading(false);
+  //   });
+  // }, []);
+
 
   const columns: GridColDef[] = [
     { field: "address", headerName: "Adres", flex: 3, editable: true },
@@ -107,7 +120,6 @@ export default function Elevators() {
             rowId,
             setRowId,
             fetchElevator,
-            handleOpenModal,
           }}
         />
       ),
@@ -122,49 +134,47 @@ export default function Elevators() {
   ];
 
   return (
-    <>
-      <Box sx={{ height: 700, width: "100%" }}>
-        <Typography variant="h6" component="h1" sx={{ textAlign: "center" }}>
-          Lista wind
-        </Typography>
-        <DataGrid
-          localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
-          pageSizeOptions={[
-            10,
-            100,
-            { value: 1000, label: "1,000" },
-            { value: -1, label: "Wszystkie" },
-          ]}
-          rows={elevatorsList}
-          getRowId={(row) => row.uuid}
-          columns={columns}
-          disableColumnSelector
-          slots={{
-            loadingOverlay: CustomLoadingOverlay,
-          }}
-          scrollbarSize={10}
-          loading={isLoading}
-          getRowSpacing={(params) => ({
-            top: params.isFirstVisible ? 0 : 5,
-            bottom: params.isLastVisible ? 0 : 5,
-          })}
-          sx={{
-            [`& .${gridClasses.row}`]: {
-              bgcolor: theme.palette.menuBackground?.main,
-            },
-          }}
-          onCellEditStop={(params) => {
-            setRowId(params.id as number);
-          }}
+    <Box sx={{ height: 700, width: "100%" }}>
+      <Typography variant="h6" component="h1" sx={{ textAlign: "center" }}>
+        Lista wind
+      </Typography>
+      <DataGrid
+        localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
+        pageSizeOptions={[
+          10,
+          100,
+          { value: 1000, label: "1,000" },
+          { value: -1, label: "Wszystkie" },
+        ]}
+        rows={elevatorsList}
+        getRowId={(row) => row.uuid}
+        columns={columns}
+        disableColumnSelector
+        slots={{
+          loadingOverlay: CustomLoadingOverlay,
+        }}
+        scrollbarSize={10}
+        loading={isLoading}
+        getRowSpacing={(params) => ({
+          top: params.isFirstVisible ? 0 : 5,
+          bottom: params.isLastVisible ? 0 : 5,
+        })}
+        sx={{
+          [`& .${gridClasses.row}`]: {
+            bgcolor: theme.palette.menuBackground?.main,
+          },
+        }}
+        onCellEditStop={(params) => {
+          setRowId(params.id as number);
+        }}
+      />
+      {selectedElevatorData && (
+        <ElevatorModal
+          isModalOpen={!!selectedElevatorData}
+          handleCloseModal={handleCloseModal}
+          selectedElevatorData={selectedElevatorData}
         />
-        {isModalOpen && selectedElevatorData && (
-          <ElevatorModal
-            isModalOpen={isModalOpen}
-            handleCloseModal={handleCloseModal}
-            selectedElevatorData={selectedElevatorData}
-          />
-        )}
-      </Box>
-    </>
+      )}
+    </Box>
   );
 }

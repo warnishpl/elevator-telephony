@@ -22,16 +22,12 @@ interface ElevatorsActionsProps {
   params: GridRenderCellParams;
   rowId: number | null;
   setRowId: React.Dispatch<React.SetStateAction<number | null>>;
-  handleOpenModal: () => void;
-  fetchElevator: (id?: string) => void;
 }
 
 export function ActionButtons({
   params,
   rowId,
   setRowId,
-  fetchElevator,
-  handleOpenModal,
 }: Readonly<ElevatorsActionsProps>) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -40,8 +36,6 @@ export function ActionButtons({
 
   function handleElevatorModal() {
     router.push(`/elevators?id=${params.row.uuid}`);
-    fetchElevator(params.row.uuid);
-    handleOpenModal();
   }
 
   async function updateElevatorData(
