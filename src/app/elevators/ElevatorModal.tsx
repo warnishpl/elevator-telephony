@@ -12,10 +12,14 @@ export default function ElevatorModal({
   handleCloseModal,
   selectedElevatorData,
 }: ElevatorModalProps) {
-    const theme = useTheme();
+  const theme = useTheme();
   return (
     <Modal
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       open={isModalOpen}
       onClose={handleCloseModal}
     >
@@ -24,7 +28,6 @@ export default function ElevatorModal({
           p: 3,
           bgcolor: theme.palette.menuBackground?.main,
           borderRadius: "10px",
-          boxShadow: 3,
         }}
       >
         <>

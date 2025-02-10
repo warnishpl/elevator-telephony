@@ -9,6 +9,8 @@ import { plPL } from "@mui/x-data-grid/locales";
 import { ActionButtons } from "./ActionButtons";
 import { CustomLoadingOverlay } from "@/components/common/Loader/Loader";
 import { Elevator, ElevatorList } from "./elevators.types";
+import { useRouter, useSearchParams } from "next/navigation";
+import ElevatorModal from "./ElevatorModal";
 
 function updateAtParser(stringDate: string) {
   const date = new Date(stringDate);
@@ -25,6 +27,36 @@ export default function Elevators() {
   const theme = useTheme();
   const [rowId, setRowId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const searchParams = useSearchParams();
+  const queryId = searchParams.get("id");
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedElevatorData(null);
+    router.push(`/elevators`);
+  };
+  const [selectedElevatorData, setSelectedElevatorData] =
+    useState<Elevator | null>();
+
+  async function fetchElevator(id?: string) {
+    const { data: elevatorData } = await requestApi<Elevator>({
+      path: `/elevator/${queryId ? queryId : id}`,
+      method: "GET",
+    });
+    if (elevatorData && elevatorData.updatedAt) {
+      elevatorData.updatedAt = updateAtParser(elevatorData.updatedAt);
+    }
+    setSelectedElevatorData(elevatorData);
+  }
+
+  useEffect(() => {
+    if (queryId) {
+      fetchElevator();
+      handleOpenModal();
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchElevators() {
@@ -74,6 +106,8 @@ export default function Elevators() {
             params,
             rowId,
             setRowId,
+            fetchElevator,
+            handleOpenModal,
           }}
         />
       ),
@@ -123,6 +157,13 @@ export default function Elevators() {
             setRowId(params.id as number);
           }}
         />
+        {isModalOpen && selectedElevatorData && (
+          <ElevatorModal
+            isModalOpen={isModalOpen}
+            handleCloseModal={handleCloseModal}
+            selectedElevatorData={selectedElevatorData}
+          />
+        )}
       </Box>
     </>
   );

@@ -9,6 +9,7 @@ import { Box, CircularProgress, Fab, useTheme } from "@mui/material";
 import { green } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { GridRenderCellParams } from "@mui/x-data-grid";
+import { useRouter } from "next/navigation";
 
 interface ElevatorRow {
   uuid: string;
@@ -21,17 +22,27 @@ interface ElevatorsActionsProps {
   params: GridRenderCellParams;
   rowId: number | null;
   setRowId: React.Dispatch<React.SetStateAction<number | null>>;
+  handleOpenModal: () => void;
+  fetchElevator: (id?: string) => void;
 }
 
 export function ActionButtons({
   params,
   rowId,
   setRowId,
+  fetchElevator,
+  handleOpenModal,
 }: Readonly<ElevatorsActionsProps>) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const theme = useTheme();
+  const router = useRouter();
 
+  function handleElevatorModal() {
+    router.push(`/elevators?id=${params.row.uuid}`);
+    fetchElevator(params.row.uuid);
+    handleOpenModal();
+  }
 
   async function updateElevatorData(
     data: { address: string; city: string; phoneNumber: string },
@@ -54,7 +65,6 @@ export function ActionButtons({
     );
 
     if (result.status === 200) {
-      console.log(result)
       setSuccess(true);
       setRowId(null);
     }
@@ -125,7 +135,7 @@ export function ActionButtons({
             "&:hover": { bgcolor: theme.palette.primaryHover?.main },
           }}
         >
-          <PreviewOutlined />
+          <PreviewOutlined onClick={handleElevatorModal} />
         </Fab>
       </Box>
     </Box>
