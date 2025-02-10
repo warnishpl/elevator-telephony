@@ -23,7 +23,7 @@ export async function requestApi<T = unknown>({
     url: path,
     data,
     baseURL: "http://eletele.tplinkdns.com/api",
-    params: params,
+    params,
     timeout: 5000,
     withCredentials: true,
     headers,
