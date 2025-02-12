@@ -20,8 +20,8 @@ interface ElevatorRow {
 
 interface ElevatorsActionsProps {
   params: GridRenderCellParams;
-  rowId: number | null;
-  setRowId: React.Dispatch<React.SetStateAction<number | null>>;
+  rowId: string | null;
+  setRowId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export function ActionButtons({

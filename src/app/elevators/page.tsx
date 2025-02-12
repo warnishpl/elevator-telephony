@@ -1,32 +1,20 @@
 "use client";
 
 import { requestApi } from "@/utils/requestApi";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { StatusIcon } from "./StatusIcon";
-import { plPL } from "@mui/x-data-grid/locales";
-import { ActionButtons } from "./ActionButtons";
-import { CustomLoadingOverlay } from "@/components/common/Loader/Loader";
+import { ActionButtons } from "@/app/elevators/ActionButtons";
 import { Elevator, ElevatorList } from "./elevators.types";
 import { useRouter, useSearchParams } from "next/navigation";
 import ElevatorModal from "./ElevatorModal";
-
-function updateAtParser(stringDate: string) {
-  const date = new Date(stringDate);
-  const lastUpdateMinutes = Math.floor(
-    (new Date().getTime() - date.getTime()) / (60 * 1000)
-  );
-  return lastUpdateMinutes < 60
-    ? `${lastUpdateMinutes} min temu`
-    : date.toLocaleString();
-}
+import { Table } from "@/components/common/Table/Table";
+import { GridColDef } from "@mui/x-data-grid";
 
 export default function Elevators() {
   const [elevatorsList, setElevatorsList] = useState<Elevator[]>([]);
-  const theme = useTheme();
-  const [rowId, setRowId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [rowId, setRowId] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const queryId = searchParams.get("id");
   const router = useRouter();
@@ -37,17 +25,6 @@ export default function Elevators() {
     setSelectedElevatorData(null);
     router.push(`/elevators`);
   };
-
-  async function fetchElevator() {
-    const { data: elevatorData } = await requestApi<Elevator>({
-      path: `/elevator/${queryId}`,
-      method: "GET",
-    });
-    if (elevatorData?.updatedAt) {
-      elevatorData.updatedAt = updateAtParser(elevatorData.updatedAt);
-    }
-    setSelectedElevatorData(elevatorData);
-  }
 
   useEffect(() => {
     if (queryId) {
@@ -67,26 +44,31 @@ export default function Elevators() {
           updatedAt: updateAtParser(elevator.updatedAt),
         }))
       );
-      setIsLoading(false);
+      setIsLoading(true);
     }
     fetchElevators();
   }, []);
 
-  // useEffect(() => {
-  //   requestApi<ElevatorList>({
-  //     path: "/elevator",
-  //     method: "GET",
-  //   }).then((res) => {
-  //     setElevatorsList(
-  //       res.data.map((elevator) => ({
-  //         ...elevator,
-  //         updatedAt: updateAtParser(elevator.updatedAt),
-  //       }))
-  //     );
-  //     setIsLoading(false);
-  //   });
-  // }, []);
+  async function fetchElevator() {
+    const { data: elevatorData } = await requestApi<Elevator>({
+      path: `/elevator/${queryId}`,
+      method: "GET",
+    });
+    if (elevatorData?.updatedAt) {
+      elevatorData.updatedAt = updateAtParser(elevatorData.updatedAt);
+    }
+    setSelectedElevatorData(elevatorData);
+  }
 
+  function updateAtParser(stringDate: string) {
+    const date = new Date(stringDate);
+    const lastUpdateMinutes = Math.floor(
+      (new Date().getTime() - date.getTime()) / (60 * 1000)
+    );
+    return lastUpdateMinutes < 60
+      ? `${lastUpdateMinutes} min temu`
+      : date.toLocaleString();
+  }
 
   const columns: GridColDef[] = [
     { field: "address", headerName: "Adres", flex: 3, editable: true },
@@ -133,40 +115,31 @@ export default function Elevators() {
     },
   ];
 
+  // useEffect(() => {
+  //   requestApi<ElevatorList>({
+  //     path: "/elevator",
+  //     method: "GET",
+  //   }).then((res) => {
+  //     setElevatorsList(
+  //       res.data.map((elevator) => ({
+  //         ...elevator,
+  //         updatedAt: updateAtParser(elevator.updatedAt),
+  //       }))
+  //     );
+  //     setIsLoading(false);
+  //   });
+  // }, []);
+
   return (
     <Box sx={{ height: 700, width: "100%" }}>
       <Typography variant="h6" component="h1" sx={{ textAlign: "center" }}>
         Lista wind
       </Typography>
-      <DataGrid
-        localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
-        pageSizeOptions={[
-          10,
-          100,
-          { value: 1000, label: "1,000" },
-          { value: -1, label: "Wszystkie" },
-        ]}
-        rows={elevatorsList}
-        getRowId={(row) => row.uuid}
+      <Table
         columns={columns}
-        disableColumnSelector
-        slots={{
-          loadingOverlay: CustomLoadingOverlay,
-        }}
-        scrollbarSize={10}
-        loading={isLoading}
-        getRowSpacing={(params) => ({
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5,
-        })}
-        sx={{
-          [`& .${gridClasses.row}`]: {
-            bgcolor: theme.palette.menuBackground?.main,
-          },
-        }}
-        onCellEditStop={(params) => {
-          setRowId(params.id as number);
-        }}
+        rows={elevatorsList}
+        isLoading={isLoading}
+        setRowId={setRowId}
       />
       {selectedElevatorData && (
         <ElevatorModal
