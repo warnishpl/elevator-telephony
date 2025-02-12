@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { styled, keyframes } from "@mui/system";
+import { styled, keyframes, alpha } from "@mui/system";
 
 const loaderAnimation = keyframes`
   from {
@@ -17,12 +17,8 @@ const StyledGridOverlay = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  backgroundColor: "rgba(18, 18, 18, 0.9)",
-  color: "#fff",
-  ...theme.applyStyles?.("light", {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    color: "#000",
-  }),
+  backgroundColor: alpha(theme.palette.textReverse.primary, 0.5),
+  color: theme.palette.text.primary,
 }));
 
 const LoaderContainer = styled(Box)({
