@@ -3,14 +3,14 @@ import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { plPL } from "@mui/x-data-grid/locales";
 import { CustomLoadingOverlay } from "@/components/common/Loader/Loader";
 import { Dispatch, SetStateAction } from "react";
+import { TableActionButtons } from "@/components/common/Table/TableActionButtons";
 
 interface TableProps {
   isLoading: boolean;
   columns: GridColDef[];
   rows: any[];
-  setRowId: Dispatch<SetStateAction<string | null>>;
 }
-export function Table({ rows, isLoading, columns, setRowId }: TableProps) {
+export function Table({ rows, isLoading, columns }: TableProps) {
   const theme = useTheme();
   return (
     <>
@@ -24,8 +24,26 @@ export function Table({ rows, isLoading, columns, setRowId }: TableProps) {
         ]}
         rows={rows}
         getRowId={(row) => row.uuid}
-        columns={columns}
+        columns={[
+          ...columns,
+          {
+            field: "actions",
+            headerName: "Akcje",
+            type: "actions",
+            renderCell: (params) => (
+              <TableActionButtons rowId={params.row.uuid} />
+            ),
+            editable: false,
+            filterable: false,
+            sortable: false,
+            resizable: false,
+            flex: 1,
+            disableColumnMenu: true,
+            hideable: false,
+          },
+        ]}
         disableColumnSelector
+        hideFooterSelectedRowCount
         slots={{
           loadingOverlay: CustomLoadingOverlay,
         }}
@@ -39,9 +57,13 @@ export function Table({ rows, isLoading, columns, setRowId }: TableProps) {
           [`& .${gridClasses.row}`]: {
             bgcolor: theme.palette.menuBackground?.main,
           },
-        }}
-        onCellEditStop={(params) => {
-          setRowId(params.id as string);
+          [`&.${gridClasses.root}`]: {
+            "--DataGrid-containerBackground":
+              theme.palette.menuBackground?.main,
+          },
+          [`&.${gridClasses.root} .${gridClasses.cell}`]: {
+            outline: "none !important",
+          },
         }}
       />
     </>

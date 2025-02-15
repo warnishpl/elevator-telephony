@@ -68,7 +68,7 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
           <SidebarItem
             label={item.label}
             key={index}
-            isSelected={pathname === item.path}
+            isSelected={pathname.startsWith(item.path)}
             isSidebarOpen={isSidebarOpen}
             path={item.path}
             icon={item.icon}

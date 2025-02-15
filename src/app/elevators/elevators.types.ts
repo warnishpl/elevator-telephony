@@ -18,3 +18,8 @@ export interface Elevator {
   updatedAt: string;
   gsmModule?: string;
 }
+export interface AllowedElevatorEditData {
+  address: string;
+  city: string;
+  phoneNumber: string;
+}
