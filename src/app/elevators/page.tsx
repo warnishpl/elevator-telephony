@@ -8,6 +8,7 @@ import { Elevator, ElevatorList } from "./elevators.types";
 import { Table } from "@/components/common/Table/Table";
 import { GridColDef } from "@mui/x-data-grid";
 import { updateAtParser } from "@/utils/updateAtParser";
+import { Loader } from "@/components/common/Loader/Loader";
 
 export default function Elevators() {
   const [elevatorsList, setElevatorsList] = useState<Elevator[]>([]);
@@ -69,6 +70,21 @@ export default function Elevators() {
       flex: 2,
     },
   ];
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          height: "calc( 100dvh - 8rem )",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Loader />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ height: 700, width: "100%" }}>
