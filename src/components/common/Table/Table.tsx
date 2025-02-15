@@ -1,8 +1,6 @@
 import { useTheme } from "@mui/material";
 import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { plPL } from "@mui/x-data-grid/locales";
-import { CustomLoadingOverlay } from "@/components/common/Loader/Loader";
-import { Dispatch, SetStateAction } from "react";
 import { TableActionButtons } from "@/components/common/Table/TableActionButtons";
 
 interface TableProps {
@@ -44,9 +42,6 @@ export function Table({ rows, isLoading, columns }: TableProps) {
         ]}
         disableColumnSelector
         hideFooterSelectedRowCount
-        slots={{
-          loadingOverlay: CustomLoadingOverlay,
-        }}
         scrollbarSize={10}
         loading={isLoading}
         getRowSpacing={(params) => ({
