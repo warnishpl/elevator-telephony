@@ -1,36 +1,63 @@
 "use client";
-import { ModeEditOutlined } from "@mui/icons-material";
-import { Fab, Tooltip, useTheme } from "@mui/material";
+import { deleteRecord, refreshRecords } from "@/utils/apiFunctions";
+import { DeleteForeverOutlined, ModeEditOutlined } from "@mui/icons-material";
+import { Box, Fab, Tooltip, useTheme } from "@mui/material";
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 interface ElevatorsActionsProps {
   rowId: GridRenderCellParams;
+  path: string;
+  parseUpdatedAt?: boolean;
+  stateToRefresh: Dispatch<SetStateAction<any>>;
 }
 
-export function TableActionButtons({ rowId }: Readonly<ElevatorsActionsProps>) {
+export function TableActionButtons({
+  rowId,
+  path,
+  stateToRefresh,
+  parseUpdatedAt,
+}: Readonly<ElevatorsActionsProps>) {
   const theme = useTheme();
   const router = useRouter();
 
-  function handleElevatorModal() {
-    router.push(`/elevators/${rowId}`);
+  function handleOpenDetails() {
+    router.push(`/${path}/${rowId}`);
   }
 
   return (
-    <Tooltip title="Edytuj">
-      <Fab
-        onClick={handleElevatorModal}
-        sx={{
-          minWidth: 40,
-          width: 40,
-          height: 40,
-          color: theme.palette.textReverse?.primary,
-          bgcolor: theme.palette.primary.main,
-          "&:hover": { bgcolor: theme.palette.primaryHover?.main },
-        }}
-      >
-        <ModeEditOutlined />
-      </Fab>
-    </Tooltip>
+    <Box sx={{ display: "flex", gap: "0.5rem" }}>
+      <Tooltip title="Edytuj">
+        <Fab
+          size="small"
+          onClick={handleOpenDetails}
+          sx={{
+            color: theme.palette.textReverse?.primary,
+            bgcolor: theme.palette.primary.main,
+            "&:hover": { bgcolor: theme.palette.primaryHover?.main },
+          }}
+        >
+          <ModeEditOutlined />
+        </Fab>
+      </Tooltip>
+      <Tooltip title="Usuń">
+        <Fab
+          size="small"
+          onClick={() =>
+            deleteRecord(String(rowId), path, () =>
+              refreshRecords(path, stateToRefresh, parseUpdatedAt)
+            )
+          }
+          sx={{
+            color: theme.palette.textReverse?.primary,
+            bgcolor: theme.palette.primary.main,
+            "&:hover": { bgcolor: theme.palette.primaryHover?.main },
+          }}
+        >
+          <DeleteForeverOutlined />
+        </Fab>
+      </Tooltip>
+    </Box>
   );
 }

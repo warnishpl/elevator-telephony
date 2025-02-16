@@ -9,24 +9,15 @@ import { Table } from "@/components/common/Table/Table";
 import { GridColDef } from "@mui/x-data-grid";
 import { updateAtParser } from "@/utils/updateAtParser";
 import { Loader } from "@/components/common/Loader/Loader";
+import { refreshRecords } from "@/utils/apiFunctions";
 
 export default function Elevators() {
   const [elevatorsList, setElevatorsList] = useState<Elevator[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    requestApi<ElevatorList>({
-      path: "/elevator",
-      method: "GET",
-    }).then((res) => {
-      setElevatorsList(
-        res.data.map((elevator) => ({
-          ...elevator,
-          updatedAt: updateAtParser(elevator.updatedAt),
-        }))
-      );
-      setIsLoading(false);
-    });
+    refreshRecords("elevator", setElevatorsList, true);
+    setIsLoading(false);
   }, []);
 
   const columns: GridColDef[] = [
@@ -86,6 +77,7 @@ export default function Elevators() {
     );
   }
 
+
   return (
     <Box sx={{ height: 700, width: "100%" }}>
       <Typography
@@ -96,7 +88,14 @@ export default function Elevators() {
       >
         Lista wind
       </Typography>
-      <Table columns={columns} rows={elevatorsList} isLoading={isLoading} />
+      <Table
+        columns={columns}
+        rows={elevatorsList}
+        isLoading={isLoading}
+        path="elevator"
+        stateToRefresh={setElevatorsList}
+        parseUpdatedAt={true}
+      />
     </Box>
   );
 }

@@ -47,7 +47,7 @@ export default function ElevatorDetailsContainer() {
 
   const handleGoBack = () => {
     setDisplayedElevatorData(null);
-    router.push(`/elevators`);
+    router.push(`/elevator`);
   };
 
   if (isLoading) {
@@ -75,6 +75,7 @@ export default function ElevatorDetailsContainer() {
         displayedElevatorData={displayedElevatorData}
         updateElevator={updateElevator}
         elevatorId={elevatorId as string}
+
       />
     </>
   );

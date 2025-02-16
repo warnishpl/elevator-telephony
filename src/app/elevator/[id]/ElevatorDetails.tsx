@@ -11,7 +11,9 @@ import {
 } from "@mui/material";
 import { AllowedElevatorEditData, Elevator } from "../elevators.types";
 import { ArrowBackOutlined, Done } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Region } from "@/app/region/regions.types";
+import { refreshRecords } from "@/utils/apiFunctions";
 
 type ElevatorDetailsProps = {
   handleGoBack: () => void;
@@ -65,6 +67,11 @@ export default function ElevatorDetails({
       setElevatorStateChangeStatus((prev) => ({ ...prev, [field]: false }));
     }, 3000);
   }
+
+  const [regionsState, setRegionsState] = useState<Region[]>([]);
+  useEffect(() => {
+    refreshRecords<Region>("region", (regions) => setRegionsState(regions));
+  }, []);
 
   return (
     <Box>
@@ -168,9 +175,14 @@ export default function ElevatorDetails({
           <FormControl margin="normal" fullWidth variant="outlined">
             <InputLabel shrink>Region</InputLabel>
             <Select native fullWidth label="Region">
-              <option>as</option>
-              <option>as</option>
-              <option>as</option>
+              {regionsState?.map((region) => (
+                <option
+                  key={region.uuid}
+                  value={region.uuid}
+                >
+                  {region.name}
+                </option>
+              ))}
             </Select>
           </FormControl>
         </Grid2>

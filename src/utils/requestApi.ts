@@ -17,7 +17,7 @@ export async function requestApi<T = unknown>({
   params,
   onError,
   headers,
-}: RequestApiProps): Promise<{ status: number; data: T }> {
+}: RequestApiProps): Promise<{ data: T }> {
   const config: AxiosRequestConfig = {
     method,
     url: path,
@@ -32,7 +32,7 @@ export async function requestApi<T = unknown>({
   return axios(config)
     .then((response) => {
       enqueueAlert("API SUCCESS", "success");
-      return { status: response.status, data: response.data };
+      return { data: response.data };
     })
     .catch((error) => {
       if (axios.isAxiosError(error)) {
