@@ -11,7 +11,7 @@ type Region = {
 };
 
 export default function RegionDetailsContainer() {
-  const { id: regionId } = useParams();
+  const { id: regionId }: { id: string } = useParams();
   const router = useRouter();
   const [displayedRegionData, setDisplayedRegionData] = useState<Region | null>(
     null
@@ -73,7 +73,7 @@ export default function RegionDetailsContainer() {
       handleGoBack={handleGoBack}
       displayedRegionData={displayedRegionData}
       updateRegion={updateRegion}
-      regionId={regionId as string}
+      regionId={regionId}
     />
   );
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { updateAtParser } from "@/utils/updateAtParser";
 import ElevatorDetails from "./ElevatorDetails";
-import type { Elevator, AllowedElevatorEditData } from "../elevators.types";
+import type { Elevator, AllowedElevatorEditData } from "../elevator.types";
 import { Loader } from "@/components/common/Loader/Loader";
 import { Box } from "@mui/material";
 
@@ -75,7 +75,6 @@ export default function ElevatorDetailsContainer() {
         displayedElevatorData={displayedElevatorData}
         updateElevator={updateElevator}
         elevatorId={elevatorId as string}
-
       />
     </>
   );

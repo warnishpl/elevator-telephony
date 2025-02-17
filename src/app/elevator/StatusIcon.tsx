@@ -10,7 +10,7 @@ export function StatusIcon({ status }: StatusIconProps) {
   if (status === null) {
     return <PriorityHighOutlinedIcon color="warning" />;
   }
-  if (status === 'error') {
+  if (status === 'ERROR') {
     return <ErrorOutlineOutlinedIcon color="error" />;
   }
   return <CheckCircleOutlineOutlinedIcon color="success" />;

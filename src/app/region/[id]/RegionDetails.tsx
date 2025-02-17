@@ -15,7 +15,6 @@ export default function RegionDetails({
   updateRegion,
   regionId,
 }: RegionDetailsProps) {
-  console.log(regionId);
   const [regionName, setRegionName] = useState(name);
   const [previousRegionName, setPreviousRegionName] = useState(name);
   const [regionNameChangeStatus, setRegionNameChangeStatus] = useState(false);

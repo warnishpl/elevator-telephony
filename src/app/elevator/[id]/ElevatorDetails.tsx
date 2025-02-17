@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { AllowedElevatorEditData, Elevator } from "../elevators.types";
+import { AllowedElevatorEditData, Elevator } from "../elevator.types";
 import { ArrowBackOutlined, Done } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { Region } from "@/app/region/regions.types";
@@ -29,28 +29,32 @@ export default function ElevatorDetails({
   updateElevator,
 }: ElevatorDetailsProps) {
   const [elevatorState, setElevatorState] = useState({
-    address: address,
-    city: city,
-    phoneNumber: phoneNumber,
+    address,
+    city,
+    phoneNumber,
+    region,
   });
 
   const [previousElevatorState, setPreviousElevatorState] = useState({
-    address: address,
-    city: city,
-    phoneNumber: phoneNumber,
+    address,
+    city,
+    phoneNumber,
+    region,
   });
 
   const [elevatorStateChangeStatus, setElevatorStateChangeStatus] = useState({
     address: false,
     city: false,
     phoneNumber: false,
+    region: false,
   });
 
   function handleUpdateElevator(field: keyof typeof elevatorStateChangeStatus) {
     if (
       elevatorState.address === previousElevatorState.address &&
       elevatorState.city === previousElevatorState.city &&
-      elevatorState.phoneNumber === previousElevatorState.phoneNumber
+      elevatorState.phoneNumber === previousElevatorState.phoneNumber &&
+      elevatorState.region === previousElevatorState.region
     )
       return;
     updateElevator(
@@ -174,12 +178,14 @@ export default function ElevatorDetails({
         <Grid2 size={6}>
           <FormControl margin="normal" fullWidth variant="outlined">
             <InputLabel shrink>Region</InputLabel>
-            <Select native fullWidth label="Region">
+            <Select
+              native
+              fullWidth
+              label="Region"
+              // value={elevatorState.region}
+            >
               {regionsState?.map((region) => (
-                <option
-                  key={region.uuid}
-                  value={region.uuid}
-                >
+                <option key={region.uuid} value={region.uuid}>
                   {region.name}
                 </option>
               ))}

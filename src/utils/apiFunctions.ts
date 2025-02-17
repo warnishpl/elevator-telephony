@@ -28,7 +28,7 @@ export function addRecord(
   });
 }
 
-export function refreshRecords<T extends { updatedAt?: string }>(
+export async function refreshRecords<T extends { updatedAt?: string }>(
   path: string,
   updateFunction: (data: T[]) => void,
   parseUpdatedAt: boolean = false

@@ -2,23 +2,24 @@
 import { requestApi } from "@/utils/requestApi";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Region, RegionsList } from "./regions.types";
+import { Region } from "./regions.types";
 import { Table } from "@/components/common/Table/Table";
 import { GridColDef } from "@mui/x-data-grid";
 import { Loader } from "@/components/common/Loader/Loader";
 import { addRecord, refreshRecords } from "@/utils/apiFunctions";
 
 export default function Regions() {
-  const [regionsState, setRegionsState] = useState<Region[]>([]); //dlaczego nie typ RegionsList?
+  const [regionsState, setRegionsState] = useState<Region[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    refreshRecords("region", refreshRegions);
-    setIsLoading(false);
+    refreshRecords("region", refreshRegions).then(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   function refreshRegions() {
-    requestApi<RegionsList>({
+    requestApi<Region[]>({
       path: "/region",
       method: "GET",
     }).then((res) => {

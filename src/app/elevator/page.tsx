@@ -1,13 +1,11 @@
 "use client";
 
-import { requestApi } from "@/utils/requestApi";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { StatusIcon } from "./StatusIcon";
-import { Elevator, ElevatorList } from "./elevators.types";
+import { Elevator } from "./elevator.types";
 import { Table } from "@/components/common/Table/Table";
 import { GridColDef } from "@mui/x-data-grid";
-import { updateAtParser } from "@/utils/updateAtParser";
 import { Loader } from "@/components/common/Loader/Loader";
 import { refreshRecords } from "@/utils/apiFunctions";
 
@@ -16,8 +14,9 @@ export default function Elevators() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    refreshRecords("elevator", setElevatorsList, true);
-    setIsLoading(false);
+    refreshRecords("elevator", setElevatorsList, true).then(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   const columns: GridColDef[] = [
@@ -76,7 +75,6 @@ export default function Elevators() {
       </Box>
     );
   }
-
 
   return (
     <Box sx={{ height: 700, width: "100%" }}>

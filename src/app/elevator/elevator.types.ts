@@ -1,5 +1,3 @@
-export type ElevatorList = Array<Elevator>;
-
 export interface Elevator {
   uuid: string;
   address: string;
@@ -10,4 +8,7 @@ export interface Elevator {
   updatedAt: string;
   gsmModule?: string;
 }
-export type AllowedElevatorEditData = Pick<Elevator, "address" | "city" | "phoneNumber">;
+export type AllowedElevatorEditData = Pick<
+  Elevator,
+  "address" | "city" | "phoneNumber"
+>;

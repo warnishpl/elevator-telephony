@@ -3,6 +3,9 @@ import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { plPL } from "@mui/x-data-grid/locales";
 import { TableActionButtons } from "@/components/common/Table/TableActionButtons";
 import { Dispatch, SetStateAction } from "react";
+import { deleteRecord, refreshRecords } from "@/utils/apiFunctions";
+import { DeleteForeverOutlined, ModeEditOutlined } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 interface TableProps {
   isLoading: boolean;
@@ -21,9 +24,28 @@ export function Table({
   stateToRefresh,
 }: TableProps) {
   const theme = useTheme();
+  const router = useRouter();
+
+  function handleOpenDetails(rowId: string) {
+    router.push(`/${path}/${rowId}`);
+  }
+
+  function handleDeleteRecord(rowId: string) {
+    deleteRecord(rowId, path, () =>
+      refreshRecords(path, stateToRefresh, parseUpdatedAt)
+    );
+  }
+  const buttons = [
+    { icon: <ModeEditOutlined />, title: "Edytuj", onClick: handleOpenDetails },
+    {
+      icon: <DeleteForeverOutlined />,
+      title: "Usuń",
+      onClick: handleDeleteRecord,
+    },
+  ];
+
   return (
     <DataGrid
-      // rowHeight={40}
       localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       pageSizeOptions={[
         10,
@@ -40,11 +62,9 @@ export function Table({
           headerName: "Akcje",
           type: "actions",
           renderCell: (params) => (
-            <TableActionButtons 
+            <TableActionButtons
               rowId={params.row.uuid}
-              path={path}
-              parseUpdatedAt={parseUpdatedAt}
-              stateToRefresh={stateToRefresh}
+              buttons={buttons}
             />
           ),
           editable: false,
