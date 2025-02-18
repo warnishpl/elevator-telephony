@@ -1,5 +1,4 @@
 import { requestApi } from "./requestApi";
-import { updateAtParser } from "./updateAtParser";
 
 export function deleteRecord(
   uuid: string,
@@ -28,25 +27,16 @@ export function addRecord(
   });
 }
 
-export async function refreshRecords<T extends { updatedAt?: string }>(
+export async function refreshRecords<T>(
   path: string,
-  updateFunction: (data: T[]) => void,
-  parseUpdatedAt: boolean = false
+  updateFunction: (data: T[]) => void
 ) {
   requestApi({
     path: `/${path}`,
     method: "GET",
   }).then((res) => {
     const data = res.data as T[];
-    const processedData = parseUpdatedAt
-      ? data.map((item) => ({
-          ...item,
-          updatedAt: item.updatedAt
-            ? updateAtParser(item.updatedAt)
-            : undefined,
-        }))
-      : data;
-
-    updateFunction(processedData);
+    updateFunction(data);
   });
+
 }

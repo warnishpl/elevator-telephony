@@ -12,7 +12,7 @@ interface TableProps {
   columns: GridColDef[];
   rows: any[];
   path: string;
-  parseUpdatedAt?: boolean;
+
   stateToRefresh: Dispatch<SetStateAction<any>>;
 }
 export function Table({
@@ -20,7 +20,6 @@ export function Table({
   isLoading,
   columns,
   path,
-  parseUpdatedAt,
   stateToRefresh,
 }: TableProps) {
   const theme = useTheme();
@@ -32,7 +31,7 @@ export function Table({
 
   function handleDeleteRecord(rowId: string) {
     deleteRecord(rowId, path, () =>
-      refreshRecords(path, stateToRefresh, parseUpdatedAt)
+      refreshRecords(path, stateToRefresh)
     );
   }
   const buttons = [

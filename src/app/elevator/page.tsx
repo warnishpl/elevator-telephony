@@ -8,16 +8,22 @@ import { Table } from "@/components/common/Table/Table";
 import { GridColDef } from "@mui/x-data-grid";
 import { Loader } from "@/components/common/Loader/Loader";
 import { refreshRecords } from "@/utils/apiFunctions";
+import { updateAtParser } from "@/utils/updateAtParser";
 
 export default function Elevators() {
   const [elevatorsList, setElevatorsList] = useState<Elevator[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    refreshRecords("elevator", setElevatorsList, true).then(() => {
+    refreshRecords("elevator", setElevatorsList).then(() => {
       setIsLoading(false);
     });
   }, []);
+
+  const elevatorsListWithUpdatedAt = elevatorsList.map((elevator) => ({
+    ...elevator,
+    updatedAt: updateAtParser(elevator.updatedAt),
+  }));
 
   const columns: GridColDef[] = [
     {
@@ -88,11 +94,10 @@ export default function Elevators() {
       </Typography>
       <Table
         columns={columns}
-        rows={elevatorsList}
+        rows={elevatorsListWithUpdatedAt}
         isLoading={isLoading}
         path="elevator"
         stateToRefresh={setElevatorsList}
-        parseUpdatedAt={true}
       />
     </Box>
   );
