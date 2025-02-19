@@ -29,14 +29,15 @@ export function addRecord(
 
 export async function refreshRecords<T>(
   path: string,
-  updateFunction: (data: T[]) => void
+  updateFunction?: (data: T[]) => void
 ) {
   requestApi({
     path: `/${path}`,
     method: "GET",
   }).then((res) => {
     const data = res.data as T[];
-    updateFunction(data);
+    if (updateFunction) {
+      updateFunction(data);
+    }
   });
-
 }

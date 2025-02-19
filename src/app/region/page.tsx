@@ -1,5 +1,4 @@
 "use client";
-import { requestApi } from "@/utils/requestApi";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Region } from "./regions.types";
@@ -13,19 +12,10 @@ export default function Regions() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    refreshRecords("region", refreshRegions).then(() => {
+    refreshRecords("region", setRegionsState).then(() => {
       setIsLoading(false);
     });
   }, []);
-
-  function refreshRegions() {
-    requestApi<Region[]>({
-      path: "/region",
-      method: "GET",
-    }).then((res) => {
-      setRegionsState(res.data);
-    });
-  }
 
   const columns: GridColDef[] = [
     {
@@ -59,13 +49,6 @@ export default function Regions() {
 
   return (
     <Box sx={{ height: 700, width: "100%" }}>
-      <button
-        onClick={() =>
-          addRecord({ name: "Nowy region" }, "region", refreshRegions)
-        }
-      >
-        Dodaj region
-      </button>
       <Table
         rows={regionsState}
         columns={columns}

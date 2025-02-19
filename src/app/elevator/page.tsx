@@ -49,6 +49,7 @@ export default function Elevators() {
       headerName: "Region",
       flex: 2,
       editable: false,
+      renderCell: (params) => <span>{params.row.region?.name}</span>,
     },
     {
       field: "status",

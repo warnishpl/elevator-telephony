@@ -3,12 +3,15 @@ export interface Elevator {
   address: string;
   city: string;
   phoneNumber: string;
-  region: string;
+  region: {
+    name: string;
+    uuid: string;
+  };
   status: string | null;
   updatedAt: string;
   gsmModule?: string;
 }
-export type AllowedElevatorEditData = Pick<
+export type AllowedElevatorEditData = Partial<Pick<
   Elevator,
   "address" | "city" | "phoneNumber"
->;
+> & {regionUuid: string}>;

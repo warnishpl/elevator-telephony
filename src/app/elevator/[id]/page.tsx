@@ -9,7 +9,7 @@ import { Loader } from "@/components/common/Loader/Loader";
 import { Box } from "@mui/material";
 
 export default function ElevatorDetailsContainer() {
-  const { id: elevatorId } = useParams();
+  const { id: elevatorId }: { id: string } = useParams();
   const router = useRouter();
   const [displayedElevatorData, setDisplayedElevatorData] =
     useState<Elevator | null>();
@@ -29,7 +29,7 @@ export default function ElevatorDetailsContainer() {
       path: `/elevator/${elevatorId}`,
       method: "PUT",
       data,
-    });
+    }).then((res) => console.log(res));
   }
 
   async function fetchElevatorData() {
@@ -74,7 +74,7 @@ export default function ElevatorDetailsContainer() {
         handleGoBack={handleGoBack}
         displayedElevatorData={displayedElevatorData}
         updateElevator={updateElevator}
-        elevatorId={elevatorId as string}
+        elevatorId={elevatorId}
       />
     </>
   );
