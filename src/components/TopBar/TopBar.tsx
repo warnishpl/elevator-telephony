@@ -26,6 +26,8 @@ import {
   Logout,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { requestApi } from "@/utils/requestApi";
+import { useRouter } from "next/navigation";
 
 interface TopBarProps {
   isSidebarOpen: boolean;
@@ -42,6 +44,7 @@ export default function TopBar({
   toggleTheme,
   fullName,
 }: Readonly<TopBarProps>) {
+  const router = useRouter();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -52,7 +55,9 @@ export default function TopBar({
     setAnchorEl(null);
   };
   function handleLogout() {
-    //zapytanie do api odsylajace Set-Cookie z data wygasniecia w przeszlosci
+    requestApi({ path: "/auth/logout", method: "POST" }).then(() => {
+      router.push("/auth");
+    });
   }
   return (
     <Box
@@ -207,6 +212,7 @@ export default function TopBar({
             <Logout
               sx={{ color: theme.palette.primary.main }}
               fontSize="small"
+              onClick={handleLogout}
             />
           </ListItemIcon>
           Wyloguj się

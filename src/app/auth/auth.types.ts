@@ -26,9 +26,7 @@ export interface HandlersProps {
 export interface AuthProps {
   children: ReactNode;
 }
-export interface ApiResponse {
-  status?: number;
-}
+
 
 export interface InputField {
   option: Option;
@@ -42,7 +40,4 @@ export interface InputField {
 }
 export interface AuthProps {
   children: ReactNode;
-}
-export interface ApiResponse {
-  status?: number;
 }

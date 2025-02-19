@@ -1,13 +1,14 @@
 "use client";
 import { Box, List, useTheme } from "@mui/material";
 import {
+  AddLocationAltOutlined,
   EngineeringOutlined,
   EscalatorOutlined,
   HomeOutlined,
   InfoOutlined,
 } from "@mui/icons-material";
 import Image from "next/image";
-import sitemarkLogoIcon from "./../../../public/sitemark-logo.svg";
+import sitemarkLogoIcon from "public/sitemark-logo.svg";
 import { SidebarItem } from "../SidebarItem";
 
 interface SidebarProps {
@@ -27,16 +28,16 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
     {
       pathname,
       isSidebarOpen,
-      path: "/about",
-      icon: <InfoOutlined />,
-      label: "About",
+      path: "/elevator",
+      icon: <EscalatorOutlined />,
+      label: "Elevators",
     },
     {
       pathname,
       isSidebarOpen,
-      path: "/elevators",
-      icon: <EscalatorOutlined />,
-      label: "Elevators",
+      path: "/region",
+      icon: <AddLocationAltOutlined />,
+      label: "Regions",
     },
     {
       pathname,
@@ -44,6 +45,13 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
       path: "/employees",
       icon: <EngineeringOutlined />,
       label: "Employees",
+    },
+    {
+      pathname,
+      isSidebarOpen,
+      path: "/about",
+      icon: <InfoOutlined />,
+      label: "About",
     },
   ];
   return (
@@ -68,7 +76,7 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
           <SidebarItem
             label={item.label}
             key={index}
-            isSelected={pathname === item.path}
+            isSelected={pathname.startsWith(item.path)}
             isSidebarOpen={isSidebarOpen}
             path={item.path}
             icon={item.icon}

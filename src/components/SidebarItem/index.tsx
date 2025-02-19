@@ -6,11 +6,12 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "next/link";
+import { cloneElement } from "react";
 interface SidebarItemProps {
   isSelected: boolean;
   isSidebarOpen: boolean;
   children: React.ReactNode;
-  icon: React.ReactNode;
+  icon: React.JSX.Element;
   path: string;
   label: string;
 }
@@ -42,12 +43,17 @@ export function SidebarItem({
         sx={{
           display: "flex",
           flexDirection: "row",
+          alignItems: "center",
           justifyContent: "space-between",
         }}
       >
-        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemIcon>
+          {cloneElement(icon, {style: {height: '2rem'}} )}
+        </ListItemIcon>
         {isSidebarOpen ? <ListItemText primary={`${label}`} /> : ""}
       </ListItemButton>
     </ListItem>
   );
 }
+
+//
