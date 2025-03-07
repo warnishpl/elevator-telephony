@@ -122,6 +122,24 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     },
     typography: {
       fontFamily: `'Roboto', 'Helvetica', 'Arial', sans-serif`,
+      h1: {
+        fontSize: "40px",
+      },
+      h2: {
+        fontSize: "32px",
+      },
+      h3: {
+        fontSize: "24px",
+      },
+      h4: {
+        fontSize: "20px",
+      },
+      h5: {
+        fontSize: "16px",
+      },
+      h6: {
+        fontSize: "14px",
+      },
     },
   });
 

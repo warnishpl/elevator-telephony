@@ -13,17 +13,17 @@ export function deleteRecord(
   });
 }
 
-export function addRecord(
+export async function addRecord(
   data: any,
   path: string,
-  refreshFunction: () => void
+  refreshFunction?: () => void
 ) {
   requestApi({
     path: `/${path}`,
     method: "POST",
     data,
   }).then(() => {
-    refreshFunction();
+    if (refreshFunction) refreshFunction();
   });
 }
 

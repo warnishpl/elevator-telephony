@@ -42,7 +42,7 @@ export default function Sidebar({ pathname, isSidebarOpen }: SidebarProps) {
     {
       pathname,
       isSidebarOpen,
-      path: "/employees",
+      path: "/employee",
       icon: <EngineeringOutlined />,
       label: "Employees",
     },

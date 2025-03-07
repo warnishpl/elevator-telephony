@@ -6,6 +6,7 @@ import { Table } from "@/components/common/Table/Table";
 import { GridColDef } from "@mui/x-data-grid";
 import { Loader } from "@/components/common/Loader/Loader";
 import { addRecord, refreshRecords } from "@/utils/apiFunctions";
+import { Header } from "@/components/common/Header/Header";
 
 export default function Regions() {
   const [regionsState, setRegionsState] = useState<Region[]>([]);
@@ -48,14 +49,31 @@ export default function Regions() {
   }
 
   return (
-    <Box sx={{ height: 700, width: "100%" }}>
-      <Table
-        rows={regionsState}
-        columns={columns}
-        isLoading={isLoading}
-        path="region"
-        stateToRefresh={setRegionsState}
-      />
-    </Box>
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Header title="Region" subtitle="Zarządzanie regionami" />
+      </Box>
+      <Box
+        sx={{
+          height: "75vh",
+          width: "calc( 100% - 40px )",
+          margin: "20px",
+        }}
+      >
+        <Table
+          rows={regionsState}
+          columns={columns}
+          isLoading={isLoading}
+          path="region"
+          stateToRefresh={setRegionsState}
+        />
+      </Box>
+    </>
   );
 }

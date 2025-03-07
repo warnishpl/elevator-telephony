@@ -13,8 +13,7 @@ export default function ContextArea({
   return (
     <Box
       sx={{
-        paddingY: "2rem",
-        paddingX: "5rem",
+        height: "100%",
         transition: "all 0.3s ease-in-out",
         marginLeft: isSidebarOpen ? "16rem" : "4rem",
       }}

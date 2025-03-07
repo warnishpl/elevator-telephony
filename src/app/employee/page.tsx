@@ -1,73 +1,64 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { StatusIcon } from "./StatusIcon";
-import { Elevator } from "./elevator.types";
 import { Table } from "@/components/common/Table/Table";
+import { Box } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 import { Loader } from "@/components/common/Loader/Loader";
+import { Employee } from "./employee.types";
 import { refreshRecords } from "@/utils/apiFunctions";
-import { updateAtParser } from "@/utils/updateAtParser";
+import { AddRecordModal } from "../../components/common/AddRecordModal/AddRecordModal";
 import { Header } from "@/components/common/Header/Header";
 
-export default function Elevators() {
-  const [elevatorsList, setElevatorsList] = useState<Elevator[]>([]);
+export default function Employees() {
+  const [employeesState, setEmployeesState] = useState<Employee[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
 
   useEffect(() => {
-    refreshRecords("elevator", setElevatorsList).then(() => {
+    refreshRecords("region", setEmployeesState).then(() => {
       setIsLoading(false);
     });
   }, []);
 
-  const elevatorsListWithUpdatedAt = elevatorsList.map((elevator) => ({
-    ...elevator,
-    updatedAt: updateAtParser(elevator.updatedAt),
-  }));
-
   const columns: GridColDef[] = [
     {
-      field: "address",
-      headerName: "Adres",
-      flex: 3,
+      field: "firstName",
+      headerName: "Imię",
+      flex: 1,
       editable: false,
     },
     {
-      field: "city",
-      headerName: "Miasto",
-      flex: 2,
+      field: "lastName",
+      headerName: "Nazwisko",
+      flex: 1,
       editable: false,
     },
     {
       field: "phoneNumber",
       headerName: "Numer telefonu",
-      flex: 2,
-      editable: false,
-    },
-    {
-      field: "region",
-      headerName: "Region",
-      flex: 2,
-      editable: false,
-      renderCell: (params) => <span>{params.row.region?.name}</span>,
-    },
-    {
-      field: "status",
-      headerName: "Status",
       flex: 1,
       editable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <StatusIcon status={params.row.status}></StatusIcon>
-      ),
     },
     {
-      field: "updatedAt",
-      headerName: "Zaaktualizowano",
-      flex: 2,
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+      editable: false,
     },
   ];
+  const filteredColumns = columns.map(({ field, headerName }) => ({
+    field,
+    headerName,
+  }));
 
   if (isLoading) {
     return (
@@ -93,7 +84,7 @@ export default function Elevators() {
           alignItems: "center",
         }}
       >
-        <Header title="Lista wind" subtitle="Zarzadzanie windami" />
+        <Header title="Pracownicy" subtitle="Lista pracowników" />
       </Box>
       <Box
         sx={{
@@ -104,10 +95,18 @@ export default function Elevators() {
       >
         <Table
           columns={columns}
-          rows={elevatorsListWithUpdatedAt}
+          rows={employeesState}
           isLoading={isLoading}
-          path="elevator"
-          stateToRefresh={setElevatorsList}
+          path="employee"
+          stateToRefresh={setEmployeesState}
+          handleOpenModal={handleOpenModal}
+          CanAddNew={true}
+        />
+        <AddRecordModal
+          data={filteredColumns}
+          isModalOpen={isModalOpen}
+          handleCloseModal={handleCloseModal}
+          path="employee"
         />
       </Box>
     </>

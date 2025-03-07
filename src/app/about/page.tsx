@@ -1,5 +1,6 @@
 "use client";
 
+import { Header } from "@/components/common/Header/Header";
 import {
   Box,
   Card,
@@ -15,13 +16,15 @@ export default function About() {
   return (
     <Box>
       {/* Nagłówek */}
-      <Typography variant="h3" align="center" gutterBottom>
-        O Nas
-      </Typography>
-      <Typography variant="h5" align="center" paragraph>
-        Witamy w firmie zajmującej się kompleksową obsługą wind i urządzeń
-        dźwigowych.
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Header title="O nas" subtitle="Dowiedz się o nas" />
+      </Box>
 
       {/* Sekcja Nasza Historia */}
       <Stack

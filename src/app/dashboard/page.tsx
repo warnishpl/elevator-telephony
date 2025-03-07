@@ -1,13 +1,20 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Header } from "@/components/common/Header/Header";
+import { Box } from "@mui/material";
 
 export default function Dashboard() {
   return (
-    <Box>
-      <Typography variant="h6" component="h1">
-        DASHBOARD DASHBOARD DASHBOARD DASHBOARD DASHBOARD DASHBOARD DASHBOARD
-      </Typography>
-    </Box>
+    <>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Header title="Dashboard" subtitle="Panel administracyjny" />
+      </Box>
+    </>
   );
 }

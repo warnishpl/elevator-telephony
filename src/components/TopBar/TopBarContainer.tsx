@@ -25,7 +25,7 @@ export default function TopBarContainer({
   function handleUserData(data: WhoAmIResponse) {
     const { firstName, lastName } = data;
     if (firstName && lastName) {
-      setFullName(`${firstName} ${lastName}`);
+      setFullName(`${firstName}`);
     }
   }
 
